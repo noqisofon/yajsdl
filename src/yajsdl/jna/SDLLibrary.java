@@ -106,7 +106,7 @@ public interface SDLLibrary extends Library {
     /**
      * 8bit サーフェスのパレットの一部を設定します。
      */
-    int SDL_SetPalatte(SDL_Surface surface, int flags, SDL_Color[] colors, int firstcolor, int ncolors);
+    int SDL_SetPalette(SDL_Surface surface, int flags, SDL_Color[] colors, int firstcolor, int ncolors);
 
 
     /**
@@ -136,7 +136,7 @@ public interface SDLLibrary extends Library {
     /**
      * RGBA カラー値をピクセルフォーマットに写像します。
      */
-    int SDL_MapRGBA(SDL_PixelFormat fmt, byte r, byte g, byte b);
+    int SDL_MapRGBA(SDL_PixelFormat fmt, byte r, byte g, byte b, byte a);
 
 
     /**
