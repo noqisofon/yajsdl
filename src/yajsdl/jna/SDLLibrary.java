@@ -3,7 +3,6 @@ package yajsdl.jna;
 import com.sun.jna.Library;
 import com.sun.jna.Function;
 import com.sun.jna.Native;
-import com.sun.jna.Structure;
 import com.sun.jna.Pointer;
 
 import com.sun.jna.ptr.IntByReference;
@@ -379,7 +378,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    void SDL_WM_GetCaption(ByReference<String> title, ByReference<String> icon);
+    void SDL_WM_GetCaption(String title, String icon);
 
 
     /**
@@ -407,110 +406,4 @@ public interface SDLLibrary extends Library {
     /* @} */
 
 
-    public static class SDL_Rect extends Structure {
-        short x, y;
-        short w, h;
-    }
-
-
-    public static class SDL_Color extends Structure {
-        byte r;
-        byte g;
-        byte b;
-        byte unused;
-    }
-
-
-    public static class SDL_Palette extends Structure {
-        int ncolors;
-        /*SDL_Color* */Structure[] colors;
-    }
-
-
-    public static class SDL_PixelFormat extends Structure {
-        Structure[] palette;
-        byte BitsPerPixel;
-        byte BytesPerPixel;
-        int Rmask, Gmask, Bmask, Amask;
-        byte Rshift, Gshift, Bshift, Ashift;
-        byte Rloss, Gloss, Bloss, Aloss;
-        int colorkey;
-        byte alpha;
-    }
-
-
-    public static class SDL_Surface extends Structure {
-        int flags;
-        SDL_PixelFormat format;
-        int w, h;
-        short pitch;
-        Pointer/* void* */ pixels;
-        int offset;
-
-        Pointer/* struct private_hwdata* */ hwdata;
-
-        SDL_Rect clip_rect;
-        int unused1;
-
-        int locked;
-
-        SDL_BlitMap map;
-
-        int format_version;
-
-        int refcount;
-    }
-
-
-    public static class SDL_VideoInfo extends Structure {
-        int hw_available;
-        int wm_available;
-        int blit_hw;
-        int blit_hw_CC;
-        int blit_hw_A;
-        int blit_sw;
-        int blit_sw_CC;
-        int blit_sw_A;
-        int blit_fill;
-        int video_mem;
-        SDL_PixelFormat vfmt;
-        int current_w;
-        int current_h;
-    }
-
-
-    public static class SDL_Overlay extends Structure {
-        int format;
-        int w, h;
-        int planes;
-        short[] pitches;
-        byte[][] pixels;
-
-        Function[]/* struct private_yuvhwfuncs */ hwfuncs;
-        Pointer/* struct private_yuvhwdata* */ hwdata;
-
-        int hw_overlay;
-        int Unusedbits;
-    }
-
-
-    public enum SDL_GLAttr {
-        SDL_GL_RED_SIZE,
-            SDL_GL_GREEN_SIZE,
-            SDL_GL_BLUE_SIZE,
-            SDL_GL_ALPHA_SIZE,
-            SDL_GL_BUFFER_SIZE,
-            SDL_GL_DOUBLEBUFFER,
-            SDL_GL_DEPTH_SIZE,
-            SDL_GL_STENCIL_SIZE,
-            SDL_GL_ACCUM_RED_SIZE,
-            SDL_GL_ACCUM_GREEN_SIZE,
-            SDL_GL_ACCUM_BLUE_SIZE,
-            SDL_GL_ACCUM_ALPHA_SIZE,
-            SDL_GL_STEREO,
-            SDL_GL_MULTISAMPLEBUFFERS,
-            SDL_GL_MULTISAMPLESAMPLES,
-            SDL_GL_ACCELERATED_VISUAL,
-            SDL_GL_SWAP_CONTROL
-            }
 }
