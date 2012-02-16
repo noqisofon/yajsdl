@@ -21,27 +21,37 @@
 //
 package yajsdl.video;
 
+import java.nio.ByteBuffer;
+import com.sun.jna.Pointer;
+
+import yajsdl.Disposable;
 import yajsdl.jna.SDLLibrary;
-import yajsdl.jna.SDL_Surface;
 import yajsdl.jna.SDL_Color;
+import yajsdl.jna.SDL_Surface;
 
 
 /**
  * 
  */
-public class Surface {
+public class Surface implements Disposable {
     /**
      * 
      */
+    public Surface() {
+    }
+    /**
+     * 指定された幅、高さ、色深度、サーフェスフラッグを持つ空のサーフェスを作成します。
+     */
     public Surface(int width, int height, int depth, int flags) {
-        PixelFormat pixel_format = PixelFormat.getDefaultPixelFormat();
-
-        content_ = SDLLibrary.INSTANCE.SDL_CreateRGBSurface( flags,
-                                                             width, height, depth,
-                                                             pixel_format.getRedMask(),
-                                                             pixel_format.getGreenMask(),
-                                                             pixel_format.getBlueMask(),
-                                                             pixel_format.getAlphaMask() );
+        this.content_ = baseCreateRGBSurface( width, height, depth, flags );
+        this.is_disposed_ = false;
+    }
+    /**
+     * 指定された幅、高さ、色深度、サーフェスフラッグを持つサーフェスをピクセルバッファから作成します。
+     */
+    public Surface(ByteBuffer pixelBuffer, int width, int height, int depth, int flags) {
+        this.content_ = baseCreateRGBSurfaceFrom( pixelBuffer, width, height, depth, flags );
+        this.is_disposed_ = false;
     }
 
 
@@ -49,12 +59,107 @@ public class Surface {
      * 8 bit サーフェスのカラーマップの一部を設定します。
      */
     public boolean setColors(Color[] colors, int firstColor, int nColors) {
-        int ret = 0;
-        SDL_Color[] sdl_colors = new SDL_Color[colors.length];
+        return baseSetColors( colors, firstColor, nColors );
+    }
 
-        for ( int i = 0; i < sdl_colors.length; ++ i ) {
-            sdl_colors[i] = colors[i].toSDLColor();
-        }
+
+    /**
+     * 8 bit サーフェスのパレットの一部を設定します。
+     */
+    public boolean setPalette(int flags, Color[] colors, int firstColor, int nColors) {
+        return baseSetPalette( flags, colors, firstColor, nColors );
+    }
+
+
+    /**
+     * 
+     */
+    public SDL_Surface toSource() {
+        return this.content_;
+    }
+
+
+    /**
+     * 
+     */
+    public boolean isDisposed() {
+        return this.is_disposed_;
+    }
+
+
+    /**
+     * 
+     */
+    public void dispose() {
+        SDLLibrary.INSTANCE.SDL_FreeSurface( this.content_ );
+        this.is_disposed_ = true;
+    }
+
+
+    /**
+     * 
+     */
+    protected static SDL_Surface baseCreateRGBSurface(int flags, int width, int height, int depth) {
+        PixelFormat pixel_format = PixelFormat.getDefaultPixelFormat();
+
+        return baseCreateRGBSurface( flags,
+                                     width, height, depth,
+                                     pixel_format.getRedMask(),
+                                     pixel_format.getGreenMask(),
+                                     pixel_format.getBlueMask(),
+                                     pixel_format.getAlphaMask() );
+    }
+    /**
+     * 
+     */
+    protected static SDL_Surface baseCreateRGBSurface(int flags, int width, int height, int depth, int redMask, int greenMask, int blueMask, int alphaMask) {
+        return SDLLibrary.INSTANCE.SDL_CreateRGBSurface( flags,
+                                                         width, height, depth,
+                                                         redMask, greenMask, blueMask,
+                                                         alphaMask );        
+
+        
+    }
+
+
+    /**
+     * 
+     */
+    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixel_buffer, int flags, int width, int height, int depth) {
+        PixelFormat pixel_format = PixelFormat.getDefaultPixelFormat();
+
+        return baseCreateRGBSurfaceFrom( pixel_buffer,
+                                         flags,
+                                         width, height, depth,
+                                         pixel_format.getRedMask(),
+                                         pixel_format.getGreenMask(),
+                                         pixel_format.getBlueMask(),
+                                         pixel_format.getAlphaMask() );
+    }
+    /**
+     * 
+     */
+    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixelBuffer, int flags, int width, int height, int depth, int redMask, int greenMask, int blueMask, int alphaMask) {
+        Pointer pixel = new Pointer( 0 );
+        byte[] temp_bry = new byte[pixelBuffer.limit()];
+
+        pixelBuffer.get( temp_bry );
+        pixel.write( 0, temp_bry, 0, temp_bry.length );
+
+        return  SDLLibrary.INSTANCE.SDL_CreateRGBSurfaceFrom( pixel,
+                                                              flags,
+                                                              width, height, depth,
+                                                              redMask, greenMask, blueMask,
+                                                              alphaMask );
+    }
+
+
+    /**
+     * 
+     */
+    protected boolean baseSetColors(Color[] colors, int firstColor, int nColors) {
+        int ret;
+        SDL_Color[] sdl_colors = convertNativeColors( colors );
 
         ret = SDLLibrary.INSTANCE.SDL_SetColors( content_, sdl_colors, firstColor, nColors );
 
@@ -63,21 +168,31 @@ public class Surface {
 
 
     /**
-     * 8 bit サーフェスのパレットの一部を設定します。
+     * 
      */
-    public boolean setPalette(int flags, Color[] colors, int firstColor, int nColors) {
-        int ret = 0;
-        SDL_Color[] sdl_colors = new SDL_Color[colors.length];
+    protected boolean baseSetPalette(int flags, Color[] colors, int firstColor, int nColors) {
+        int ret;
+        SDL_Color[] sdl_colors = convertNativeColors( colors );
 
-        for ( int i = 0; i < sdl_colors.length; ++ i ) {
-            sdl_colors[i] = colors[i].toSDLColor();
-        }
-
-        ret = SDLLibrary.INSTANCE.SDL_SetPalette( flags, content_, sdl_colors, firstColor, nColors );
+        ret = SDLLibrary.INSTANCE.SDL_SetPalette( this.content_, flags, sdl_colors, firstColor, nColors );
 
         return ret == 0;
     }
 
 
+    /**
+     * 
+     */
+    private SDL_Color[] convertNativeColors(Color[] colors) {
+        SDL_Color[] sdl_colors = new SDL_Color[colors.length];
+
+        for ( int i = 0; i < sdl_colors.length; ++ i ) {
+            sdl_colors[i] = colors[i].toSource();
+        }
+        return sdl_colors;
+    }
+
+
     private SDL_Surface content_;
+    private boolean is_disposed_;
 }

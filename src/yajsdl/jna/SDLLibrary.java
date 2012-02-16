@@ -1,11 +1,13 @@
 package yajsdl.jna;
 
 import com.sun.jna.Library;
+import com.sun.jna.Callback;
 import com.sun.jna.Function;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 
 import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.ptr.ShortByReference;
 
 
@@ -49,6 +51,12 @@ public interface SDLLibrary extends Library {
     String SDL_GetError();
 
 
+    /// typedef for private surface blitting functions
+	public interface SDL_blit extends Callback {
+		int apply(SDL_Surface src, SDL_Rect srcrect, SDL_Surface dst, SDL_Rect dstrect);
+	}
+
+
     /**
      * 現在の表示サーフェスへの参照を返します。
      */
@@ -76,13 +84,13 @@ public interface SDLLibrary extends Library {
     /**
      * ある特定のビデオモードがサポートされているかチェックします。
      */
-    int SDL_VideoModeOK(int width, int height, int bpp, int flags);
+    int SDL_VideoModeOK(int width, int height, int bpp, Uint32 flags);
 
 
     /**
      * 与えられた領域の画面を更新します。
      */
-    void SDL_UpdateRect(SDL_Surface screen, int x, int y, int w, int h);
+    void SDL_UpdateRect(SDL_Surface screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h);
 
 
     /**
@@ -118,13 +126,13 @@ public interface SDLLibrary extends Library {
     /**
      * 表示のためのカラーガンマ値の変換テーブルを取得します。
      */
-    int SDL_GetGammaRamp(short[] redtable, short[] greentable, short[] bluetable);
+    int SDL_GetGammaRamp(ShortByReference redtable, ShortByReference greentable, ShortByReference bluetable);
 
 
     /**
      * 表示のためのカラーガンマ値の変換テーブルを設定します。
      */
-    int SDL_SetGammaRamp(short[] redtable, short[] greentable, short[] bluetable);
+    int SDL_SetGammaRamp(ShortByReference redtable, ShortByReference greentable, ShortByReference bluetable);
 
 
     /**
@@ -160,7 +168,7 @@ public interface SDLLibrary extends Library {
     /**
      * 空の SDL_Surface オブジェクトを作成します。
      */
-    SDL_Surface SDL_CreateRGBSurface(/* void* */Pointer pixels, int flags, int width, int height, int depth, int Rmask, int Gmask, int Bmask, int Amask);
+    SDL_Surface SDL_CreateRGBSurfaceFrom(/* void* */Pointer pixels, int flags, int width, int height, int depth, int Rmask, int Gmask, int Bmask, int Amask);
 
 
     /**
@@ -314,13 +322,13 @@ public interface SDLLibrary extends Library {
     /**
      * 特殊な SDL/OpenGL 属性の値を取得します。
      */
-    int SDL_GL_GetAttribute(SDLGLattr attr, IntByReference value);
+    int SDL_GL_GetAttribute(SDL_GLattr attr, IntByReference value);
 
 
     /**
      * 特殊な SDL/OpenGL 属性の値を設定します。
      */
-    int SDL_GL_SetAttribute(SDLGLattr attr, int value);
+    int SDL_GL_SetAttribute(SDL_GLattr attr, int value);
 
 
     /**
@@ -378,7 +386,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    void SDL_WM_GetCaption(String title, String icon);
+    void SDL_WM_GetCaption(PointerByReference title, PointerByReference icon);
 
 
     /**

@@ -1,7 +1,7 @@
 package yajsdl.jna;
 
 
-public static interface SDL_GLattr {
+public interface SDL_GLattr {
     /// <i>native declaration : line 227</i>
     public static final int SDL_GL_RED_SIZE = 0;
     /// <i>native declaration : line 228</i>

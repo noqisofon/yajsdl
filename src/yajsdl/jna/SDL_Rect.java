@@ -10,7 +10,7 @@ public class SDL_Rect extends Structure {
 
     public SDL_Rect() {
         super();
-        initFieldOrder();
+        this.initFieldOrder();
     }
     public SDL_Rect(Sint16 x, Sint16 y, Uint16 w, Uint16 h) {
         super();
@@ -20,7 +20,7 @@ public class SDL_Rect extends Structure {
         this.w = w;
         this.h = h;
 
-        initFieldOrder();
+        this.initFieldOrder();
     }
 
 

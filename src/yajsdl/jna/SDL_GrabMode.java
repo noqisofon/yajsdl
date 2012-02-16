@@ -2,7 +2,7 @@ package yajsdl.jna;
 
 
 /// enum values
-public static interface SDL_GrabMode {
+public interface SDL_GrabMode {
     /// <i>native declaration : line 920</i>
     public static final int SDL_GRAB_QUERY = -1;
     /// <i>native declaration : line 921</i>

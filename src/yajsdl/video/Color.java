@@ -24,6 +24,7 @@ package yajsdl.video;
 
 import yajsdl.jna.SDLLibrary;
 import yajsdl.jna.SDL_Color;
+import yajsdl.jna.Uint8;
 
 
 /**
@@ -33,73 +34,79 @@ public class Color {
     /**
      * 範囲(0..255)の指定された赤、緑、青を使って、RGB カラーを作成します。
      */
-    public Color(int r, int g, int b) {
-        this.red_   = r & 0xff;
-        this.green_ = g & 0xff;
-        this.blue_  = b & 0xff;
+    public Color(byte r, byte g, byte b) {
+        this.red_   = r;
+        this.green_ = g;
+        this.blue_  = b;
         this.alpha_ = 0;
+
+        this.pixcel_format_ = PixelFormat.getDefaultPixelFormat();
     }
     /**
      * 範囲(0..255)の指定された赤、緑、青、およびアルファ値を使って、RGBA カラーを作成します。
      */
-    public Color(int r, int g, int b, int a) {
-        this.red_   = r & 0xff;
-        this.green_ = g & 0xff;
-        this.blue_  = b & 0xff;
-        this.alpha_ = a & 0xff;
+    public Color(byte r, byte g, byte b, byte a) {
+        this.red_   = r;
+        this.green_ = g;
+        this.blue_  = b;
+        this.alpha_ = a;
+
+        this.pixcel_format_ = PixelFormat.getDefaultPixelFormat();
     }
     /**
      *
      */
     public Color(int rgb) {
-        this.red_   = (rgb >> 16) & 0xff;
-        this.green_ = (rgb >>  8) & 0xff;
-        this.blue_  = rgb & 0xff;
+        this.red_   = (byte)((rgb >> 16) & 0xff);
+        this.green_ = (byte)((rgb >>  8) & 0xff);
+        this.blue_  = (byte)(rgb & 0xff);
         this.alpha_ = 0;
+
+        this.pixcel_format_ = PixelFormat.getDefaultPixelFormat();
     }
 
 
     /**
      *
      */
-    public int getRed() { return this.red_; }
+    public byte getRed() { return this.red_; }
 
 
     /**
      *
      */
-    public int getGreen() { return this.green_; }
+    public byte getGreen() { return this.green_; }
 
 
     /**
      *
      */
-    public int getBlue() { return this.blue_; }
+    public byte getBlue() { return this.blue_; }
 
 
     /**
      *
      */
-    public void setRed(int red) { this.red_ = red; }
+    public void setRed(byte red) { this.red_ = red; }
 
 
     /**
      *
      */
-    public void setGreen(int green) { this.green_ = green; }
+    public void setGreen(byte green) { this.green_ = green; }
 
 
     /**
      *
      */
-    public void setBlue(int blue) { this.blue_ = blue; }
+    public void setBlue(byte blue) { this.blue_ = blue; }
 
 
     /**
      * デフォルトの PixelFormat に含まれる色を表す RGB 値を返します。
      */
     public int getRGB() {
-        return SDLLibrary.INSTANCE.SDL_MapRGB( PixelFormat.getDefaultPixelFormat(),
+        return SDLLibrary.INSTANCE.SDL_MapRGB( this.pixcel_format_.toSource(),
                                                this.red_,
                                                this.green_,
                                                this.blue_ );
@@ -110,7 +117,7 @@ public class Color {
      * デフォルトの PixelFormat に含まれる色を表す RGBA 値を返します。
      */
     public int getRGBA() {
-        return SDLLibrary.INSTANCE.SDL_MapRGBA( PixelFormat.getDefaultPixelFormat(),
+        return SDLLibrary.INSTANCE.SDL_MapRGBA( this.pixcel_format_.toSource(),
                                                 this.red_,
                                                 this.green_,
                                                 this.blue_,
@@ -121,17 +128,18 @@ public class Color {
     /**
      * レシーバを SDL_Color オブジェクトに変換して返します。
      */
-    public SDL_Color toSDLColor() {
+    public SDL_Color toSource() {
         SDL_Color ret = new SDL_Color();
 
-        ret.r = this.red_;
-        ret.g = this.green_;
-        ret.b = this.blue_;
-        ret.unused = this.alpha_;
+        ret.r = Uint8.valueOf( this.red_ );
+        ret.g = Uint8.valueOf( this.green_ );
+        ret.b = Uint8.valueOf( this.blue_ );
+        ret.unused = Uint8.valueOf( this.alpha_ );
 
         return ret;
     }
 
 
-    private int red_, green_, blue_, alpha_;
+    private byte red_, green_, blue_, alpha_;
+    private PixelFormat pixcel_format_;
 }

@@ -21,6 +21,8 @@
 //
 package yajsdl.video;
 
+import yajsdl.jna.SDL_PixelFormat;
+
 
 /**
  * 
@@ -69,5 +71,13 @@ public class PixelFormat {
      */
     public static PixelFormat getDefaultPixelFormat() {
         return null;
+    }
+
+    
+    /**
+     * 
+     */
+    public SDL_PixelFormat toSource() {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
