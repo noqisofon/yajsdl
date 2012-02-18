@@ -8,6 +8,6 @@ package yajsdl.jna;
  *
  * @author rihine
  */
-class SDL_bool {
+public interface SDL_bool {
     
 }

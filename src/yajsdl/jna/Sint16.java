@@ -8,6 +8,6 @@ package yajsdl.jna;
  *
  * @author rihine
  */
-public interface SDL_Joystick extends SDLLibrary._SDL_Joystick {
+public interface Sint16 {
     
 }
