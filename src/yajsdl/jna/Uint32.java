@@ -8,6 +8,6 @@ package yajsdl.jna;
  *
  * @author rihine
  */
-class Uint32 {
+public interface Uint32 {
     
 }

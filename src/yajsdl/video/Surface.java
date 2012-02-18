@@ -28,6 +28,9 @@ import yajsdl.Disposable;
 import yajsdl.jna.SDLLibrary;
 import yajsdl.jna.SDL_Color;
 import yajsdl.jna.SDL_Surface;
+import yajsdl.jna.SDL_Rect;
+import yajsdl.jna.Uint32;
+import yajsdl.jna.ValueType;
 
 
 /**
@@ -38,6 +41,13 @@ public class Surface implements Disposable {
      * 
      */
     public Surface() {
+    }
+    /**
+     * 
+     */
+    public Surface(SDL_Surface other) {
+        this.content_ = other;
+        this.is_disposed_ = false;
     }
     /**
      * 指定された幅、高さ、色深度、サーフェスフラッグを持つ空のサーフェスを作成します。
@@ -85,14 +95,24 @@ public class Surface implements Disposable {
     public boolean isDisposed() {
         return this.is_disposed_;
     }
+    
+    
+    /**
+     * 
+     */
+    public boolean isScreen() {
+        return false;
+    }
 
 
     /**
      * 
      */
     public void dispose() {
-        SDLLibrary.INSTANCE.SDL_FreeSurface( this.content_ );
-        this.is_disposed_ = true;
+        if ( this.is_disposed_ != true ) {
+            SDLLibrary.INSTANCE.SDL_FreeSurface( this.content_ );
+            this.is_disposed_ = true;
+        }
     }
 
 
@@ -139,7 +159,10 @@ public class Surface implements Disposable {
     /**
      * 
      */
-    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixelBuffer, int flags, int width, int height, int depth, int redMask, int greenMask, int blueMask, int alphaMask) {
+    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixelBuffer,
+                                                          int flags,
+                                                          int width, int height, int depth,
+                                                          int redMask, int greenMask, int blueMask, int alphaMask) {
         Pointer pixel = new Pointer( 0 );
         byte[] temp_bry = new byte[pixelBuffer.limit()];
 
@@ -183,13 +206,63 @@ public class Surface implements Disposable {
     /**
      * 
      */
-    private SDL_Color[] convertNativeColors(Color[] colors) {
+    protected void baseUpdateRect(int x, int y, int width, int height) {
+        SDLLibrary.INSTANCE.SDL_UpdateRect( content_,
+                                            ValueType.toSint32( x ),
+                                            ValueType.toSint32( y ),
+                                            ValueType.toUint32( width ),
+                                            ValueType.toUint32( height ) );
+    }
+
+
+    /**
+     * 
+     */
+    protected void baseUpdateRects(Rect[] rects) {
+        SDL_Rect[] sdl_rects = convertNativeRects( rects );
+
+        SDLLibrary.INSTANCE.SDL_UpdateRects( content_, rects.length, sdl_rects );
+    }
+
+
+    /**
+     * 
+     */
+    protected void baseFlip() {
+        SDLLibrary.INSTANCE.SDL_Flip( content_ );
+    }
+
+
+    /**
+     * 
+     */
+    private static SDL_Color[] convertNativeColors(Color[] colors) {
         SDL_Color[] sdl_colors = new SDL_Color[colors.length];
 
         for ( int i = 0; i < sdl_colors.length; ++ i ) {
             sdl_colors[i] = colors[i].toSource();
         }
         return sdl_colors;
+    }
+
+
+    /**
+     * 
+     */
+    private static SDL_Rect[] convertNativeRects(Rect[] rects) {
+        SDL_Rect[] sdl_rects = new SDL_Rect[rects.length];
+
+        for ( int i = 0; i < sdl_rects.length; ++ i ) {
+            sdl_rects[i] = rects[i].toSource();
+        }
+        return sdl_rects;
+    }
+    
+    
+    static SDL_Surface baseSetVideoMode(int width, int height, int bpp, int flags) {
+        Uint32 surface_flags = ValueType.toUint32( flags );
+        
+        return SDLLibrary.INSTANCE.SDL_SetVideoMode( width, height, bpp, surface_flags );
     }
 
 

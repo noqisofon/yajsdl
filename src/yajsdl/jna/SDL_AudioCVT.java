@@ -8,7 +8,6 @@ package yajsdl.jna;
  *
  * @author rihine
  */
-public interface Uint8 {
-     byte get();
-     void set(byte value);
+class SDL_AudioCVT {
+    
 }

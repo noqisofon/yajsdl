@@ -24,7 +24,7 @@ package yajsdl.video;
 
 import yajsdl.jna.SDLLibrary;
 import yajsdl.jna.SDL_Color;
-import yajsdl.jna.Uint8;
+import yajsdl.jna.ValueType;
 
 
 /**
@@ -131,10 +131,10 @@ public class Color {
     public SDL_Color toSource() {
         SDL_Color ret = new SDL_Color();
 
-        ret.r = Uint8.valueOf( this.red_ );
-        ret.g = Uint8.valueOf( this.green_ );
-        ret.b = Uint8.valueOf( this.blue_ );
-        ret.unused = Uint8.valueOf( this.alpha_ );
+        ret.r =  this.red_;
+        ret.g = this.green_;
+        ret.b = this.blue_;
+        ret.unused = this.alpha_;
 
         return ret;
     }

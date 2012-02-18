@@ -2,13 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package yajsdl.jna;
+package yajsdl.events;
 
 /**
  *
  * @author rihine
  */
-public interface Uint8 {
-     byte get();
-     void set(byte value);
+class SDLEventException extends Exception {
+    
 }

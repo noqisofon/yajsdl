@@ -34,36 +34,36 @@ public class PixelFormat {
      * 
      */
     public int getRedMask() {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
+        // TODO 自動生成されたメソッド・スタブ
+        return 0;
+    }
 
 
     /**
      * 
      */
-	public int getGreenMask() {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
+    public int getGreenMask() {
+        // TODO 自動生成されたメソッド・スタブ
+        return 0;
+    }
 
 
     /**
      * 
      */
     public int getBlueMask() {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
+        // TODO 自動生成されたメソッド・スタブ
+        return 0;
+    }
 
 
     /**
      * 
      */
     public int getAlphaMask() {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
+        // TODO 自動生成されたメソッド・スタブ
+        return 0;
+    }
 
 
     /**
