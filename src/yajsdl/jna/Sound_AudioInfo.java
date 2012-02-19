@@ -24,7 +24,7 @@ public class Sound_AudioInfo extends Structure {
 	 * < Sample rate; frequency of sample points per second.<br>
 	 * C type : Uint32
 	 */
-	public Uint32 rate;
+	public int/* Uint32 */ rate;
 	public Sound_AudioInfo() {
 		super();
 		initFieldOrder();
@@ -40,7 +40,7 @@ public class Sound_AudioInfo extends Structure {
 	 * @param rate < Sample rate; frequency of sample points per second.<br>
 	 * C type : Uint32
 	 */
-	public Sound_AudioInfo(short format, byte channels, Uint32 rate) {
+	public Sound_AudioInfo(short format, byte channels, int/* Uint32 */ rate) {
 		super();
 		this.format = format;
 		this.channels = channels;

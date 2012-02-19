@@ -15,7 +15,7 @@ public class Mix_Chunk extends Structure {
 	/// C type : Uint8*
 	public Pointer abuf;
 	/// C type : Uint32
-	public Uint32 alen;
+	public int/* Uint32 */ alen;
 	/**
 	 * Per-sample volume, 0-128<br>
 	 * C type : Uint8
@@ -34,7 +34,7 @@ public class Mix_Chunk extends Structure {
 	 * @param volume Per-sample volume, 0-128<br>
 	 * C type : Uint8
 	 */
-	public Mix_Chunk(int allocated, Pointer abuf, Uint32 alen, byte volume) {
+	public Mix_Chunk(int allocated, Pointer abuf, int/* Uint32 */ alen, byte volume) {
 		super();
 		this.allocated = allocated;
 		this.abuf = abuf;

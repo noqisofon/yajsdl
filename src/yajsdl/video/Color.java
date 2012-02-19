@@ -24,7 +24,6 @@ package yajsdl.video;
 
 import yajsdl.jna.SDLLibrary;
 import yajsdl.jna.SDL_Color;
-import yajsdl.jna.ValueType;
 
 
 /**

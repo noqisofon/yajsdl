@@ -33,18 +33,18 @@ public class SDL_PixelFormat extends Structure {
 	/// C type : Uint8
 	public byte Ashift;
 	/// C type : Uint32
-	public Uint32 Rmask;
+	public int/* Uint32 */ Rmask;
 	/// C type : Uint32
-	public Uint32 Gmask;
+	public int/* Uint32 */ Gmask;
 	/// C type : Uint32
-	public Uint32 Bmask;
+	public int/* Uint32 */ Bmask;
 	/// C type : Uint32
-	public Uint32 Amask;
+	public int/* Uint32 */ Amask;
 	/**
 	 * RGB color key information<br>
 	 * C type : Uint32
 	 */
-	public Uint32 colorkey;
+	public int/* Uint32 */ colorkey;
 	/**
 	 * Alpha value information (per-surface alpha)<br>
 	 * C type : Uint8

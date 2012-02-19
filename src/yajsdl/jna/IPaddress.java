@@ -14,7 +14,7 @@ public class IPaddress extends Structure {
 	 * 32-bit IPv4 host address<br>
 	 * C type : Uint32
 	 */
-	public Uint32 host;
+	public int/* Uint32 */ host;
 	/**
 	 * 16-bit protocol port<br>
 	 * C type : Uint16
@@ -33,7 +33,7 @@ public class IPaddress extends Structure {
 	 * @param port 16-bit protocol port<br>
 	 * C type : Uint16
 	 */
-	public IPaddress(Uint32 host, short port) {
+	public IPaddress(int/* Uint32 */ host, short port) {
 		super();
 		this.host = host;
 		this.port = port;

@@ -17,7 +17,7 @@ public class SDL_Overlay extends Structure {
 	 * < Read-only<br>
 	 * C type : Uint32
 	 */
-	public Uint32 format;
+	public int/* Uint32 */ format;
 	/// < Read-only
 	public int w;
 	/// < Read-only
@@ -64,7 +64,7 @@ public class SDL_Overlay extends Structure {
 	 * C type : private_yuvhwfuncs*<br>
 	 * @param hwdata C type : private_yuvhwdata*
 	 */
-	public SDL_Overlay(Uint32 format, int w, int h, int planes, ShortByReference pitches, PointerByReference pixels, Pointer hwfuncs, Pointer hwdata) {
+	public SDL_Overlay(int/* Uint32 */ format, int w, int h, int planes, ShortByReference pitches, PointerByReference pixels, Pointer hwfuncs, Pointer hwdata) {
 		super();
 		this.format = format;
 		this.w = w;

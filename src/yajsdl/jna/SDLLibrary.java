@@ -143,8 +143,8 @@ public interface SDLLibrary extends Library {
      * 
      */
     int SDL_BuildAudioCVT( SDL_AudioCVT cvt,
-                           Uint16 src_foramt, Uint8 src_channels, int src_rate,
-                           Uint16 dst_foramt, Uint8 dst_channels, int dst_rate );
+                           short/* Uint16 */ src_foramt, byte/* Uint8 */ src_channels, int src_rate,
+                           short/* Uint16 */ dst_foramt, byte/* Uint8 */ dst_channels, int dst_rate );
 
 
     /**
@@ -162,7 +162,7 @@ public interface SDLLibrary extends Library {
      * @param len
      * @param volume
      */
-    void SDL_MixAudio(Pointer/* Uint8* */ dst, Pointer/* const Uint8* */src, Uint32 len, int volume);
+    void SDL_MixAudio(Pointer/* Uint8* */ dst, Pointer/* const Uint8* */src, int/* Uint32 */ len, int volume);
 
 
     /**
@@ -552,7 +552,7 @@ public interface SDLLibrary extends Library {
     /**
      * イベントキューをチェックしてイベントの数を返します。
      */
-    int SDL_PeepEvents(SDL_Event event, int numevents, SDL_eventaction action, Uint32 mask);
+    int SDL_PeepEvents(SDL_Event event, int numevents, SDL_eventaction action, int/* Uint32 */ mask);
 
 
     /**
@@ -613,7 +613,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    Uint8 SDL_EventState(Uint8 type, int state);
+    byte/* Uint8 */ SDL_EventState(byte/* Uint8 */ type, int state);
     /* @} */
 
 
@@ -686,7 +686,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    Sint16 SDL_JoystickGetAxis(SDL_Joystick joystick, int axis);
+    short/* Sint16 */ SDL_JoystickGetAxis(SDL_Joystick joystick, int axis);
 
 
     public static final int SDL_HAT_CENTERED  = 0x00;
@@ -703,7 +703,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    Uint8 SDL_JoystickGetHat(SDL_Joystick joystick, int hat);
+    byte/* Uint8 */ SDL_JoystickGetHat(SDL_Joystick joystick, int hat);
 
 
     /**
@@ -715,7 +715,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    Uint8 SDL_JoystickGetButton(SDL_Joystick joystick, int button);
+    byte/* Uint8 */ SDL_JoystickGetButton(SDL_Joystick joystick, int button);
 
 
     /**
@@ -1135,19 +1135,19 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    Uint8 SDL_GetMouseState(IntBuffer/* int* */ x, IntBuffer/* int* */ y);
+    byte/* Uint8 */ SDL_GetMouseState(IntBuffer/* int* */ x, IntBuffer/* int* */ y);
 
 
     /**
      * 
      */
-    Uint8 SDL_GetRelativeMouseState(IntByReference x, IntByReference y);
+    byte/* Uint8 */ SDL_GetRelativeMouseState(IntByReference x, IntByReference y);
 
 
     /**
      * マウスカーソルを指定した位置に設定します。
      */
-    void SDL_WarpMause(Uint16 x, Uint16 y);
+    void SDL_WarpMause(short/* Uint16 */ x, short/* Uint16 */ y);
 
 
     /**
@@ -1247,7 +1247,7 @@ public interface SDLLibrary extends Library {
     /**
      *
      */
-    SDL_sem SDL_CreateSemaphore(Uint32 initial_value);
+    SDL_sem SDL_CreateSemaphore(int/* Uint32 */ initial_value);
 
 
     /**
@@ -1271,7 +1271,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    int SDL_SemWaitTimeout(SDL_sem sem, Uint32 ms);
+    int SDL_SemWaitTimeout(SDL_sem sem, int/* Uint32 */ ms);
 
 
     /**
@@ -1283,7 +1283,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    Uint32 SDL_SemValue(SDL_sem sem);
+    int/* Uint32 */ SDL_SemValue(SDL_sem sem);
     /* @} */
 
 
@@ -1524,13 +1524,13 @@ public interface SDLLibrary extends Library {
     /**
      * 特殊な SDL/OpenGL 属性の値を取得します。
      */
-    int SDL_GL_GetAttribute(SDL_GLattr attr, IntByReference value);
+    int SDL_GL_GetAttribute(int/* SDL_GLattr */ attr, IntByReference value);
 
 
     /**
      * 特殊な SDL/OpenGL 属性の値を設定します。
      */
-    int SDL_GL_SetAttribute(SDL_GLattr attr, int value);
+    int SDL_GL_SetAttribute(int/* SDL_GLattr */ attr, int value);
 
 
     /**
@@ -1580,7 +1580,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    int SDL_CondWaitTimeout(SDL_cond cond, SDL_mutex mut, Uint32 ms);
+    int SDL_CondWaitTimeout(SDL_cond cond, SDL_mutex mut, int/* Uint32 */ ms);
     /* @} */
 
 

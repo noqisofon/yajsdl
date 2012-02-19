@@ -26,7 +26,7 @@ public class SDL_VideoInfo extends Structure {
 	 * < The total amount of video memory (in K)<br>
 	 * C type : Uint32
 	 */
-	public Uint32 video_mem;
+	public int/* Uint32 */ video_mem;
 	/**
 	 * < Value: The format of the video surface<br>
 	 * C type : SDL_PixelFormat*
@@ -51,7 +51,7 @@ public class SDL_VideoInfo extends Structure {
 	 * @param current_w < Value: The current video mode width<br>
 	 * @param current_h < Value: The current video mode height
 	 */
-	public SDL_VideoInfo(Uint32 video_mem, yajsdl.jna.SDL_PixelFormat.ByReference vfmt, int current_w, int current_h) {
+	public SDL_VideoInfo(int/* Uint32 */ video_mem, yajsdl.jna.SDL_PixelFormat.ByReference vfmt, int current_w, int current_h) {
 		super();
 		this.video_mem = video_mem;
 		this.vfmt = vfmt;

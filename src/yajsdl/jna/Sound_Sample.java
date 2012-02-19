@@ -40,7 +40,7 @@ public class Sound_Sample extends Structure {
 	 * < Current size of (buffer), in bytes (Uint8).<br>
 	 * C type : Uint32
 	 */
-	public Uint32 buffer_size;
+	public int/* Uint32 */ buffer_size;
 	/**
 	 * < Flags relating to this sample.<br>
 	 * C type : Sound_SampleFlags
@@ -69,7 +69,7 @@ public class Sound_Sample extends Structure {
 	 * @param flags < Flags relating to this sample.<br>
 	 * C type : Sound_SampleFlags
 	 */
-	public Sound_Sample(Pointer opaque, yajsdl.jna.Sound_DecoderInfo.ByReference decoder, Sound_AudioInfo desired, Sound_AudioInfo actual, Pointer buffer, Uint32 buffer_size, int flags) {
+	public Sound_Sample(Pointer opaque, yajsdl.jna.Sound_DecoderInfo.ByReference decoder, Sound_AudioInfo desired, Sound_AudioInfo actual, Pointer buffer, int/* Uint32 */ buffer_size, int flags) {
 		super();
 		this.opaque = opaque;
 		this.decoder = decoder;

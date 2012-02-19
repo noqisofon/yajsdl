@@ -29,8 +29,6 @@ import yajsdl.jna.SDLLibrary;
 import yajsdl.jna.SDL_Color;
 import yajsdl.jna.SDL_Surface;
 import yajsdl.jna.SDL_Rect;
-import yajsdl.jna.Uint32;
-import yajsdl.jna.ValueType;
 
 
 /**

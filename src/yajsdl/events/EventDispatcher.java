@@ -3,8 +3,6 @@ package yajsdl.events;
 import java.util.Vector;
 
 import yajsdl.jna.SDLLibrary;
-import yajsdl.jna.Uint8;
-import yajsdl.jna.ValueType;
 //import yajsdl.utils.*;
 
 
@@ -42,13 +40,13 @@ public class EventDispatcher implements Runnable {
 
 
     protected int baseSetEventState(EventState type, EventType state) {
-        Uint8 ret;
-        Uint8 event_type = ValueType.toUint8( type.toByte() );
+        byte ret;
+        byte event_type = type.toByte();
         int event_state = state.toInteger();
 
         ret = SDLLibrary.INSTANCE.SDL_EventState( event_type, event_state );
         
-        return ret.get();
+        return ret;
     }
 
 

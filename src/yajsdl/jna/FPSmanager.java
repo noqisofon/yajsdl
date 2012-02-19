@@ -11,12 +11,12 @@ import com.sun.jna.Structure;
  */
 public class FPSmanager extends Structure {
 	/// C type : Uint32
-	public Uint32 framecount;
+	public int/* Uint32 */ framecount;
 	public float rateticks;
 	/// C type : Uint32
-	public Uint32 lastticks;
+	public int/* Uint32 */ lastticks;
 	/// C type : Uint32
-	public Uint32 rate;
+	public int/* Uint32 */ rate;
 	public FPSmanager() {
 		super();
 		initFieldOrder();
@@ -29,7 +29,7 @@ public class FPSmanager extends Structure {
 	 * @param lastticks C type : Uint32<br>
 	 * @param rate C type : Uint32
 	 */
-	public FPSmanager(Uint32 framecount, float rateticks, Uint32 lastticks, Uint32 rate) {
+	public FPSmanager(int/* Uint32 */ framecount, float rateticks, int/* Uint32 */ lastticks, int/* Uint32 */ rate) {
 		super();
 		this.framecount = framecount;
 		this.rateticks = rateticks;

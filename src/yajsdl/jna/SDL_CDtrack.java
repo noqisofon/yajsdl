@@ -26,12 +26,12 @@ public class SDL_CDtrack extends Structure {
 	 * < Length, in frames, of this track<br>
 	 * C type : Uint32
 	 */
-	public Uint32 length;
+	public int/* Uint32 */ length;
 	/**
 	 * < Offset, in frames, from start of disk<br>
 	 * C type : Uint32
 	 */
-	public Uint32 offset;
+	public int/* Uint32 */ offset;
 	public SDL_CDtrack() {
 		super();
 		initFieldOrder();
@@ -50,7 +50,7 @@ public class SDL_CDtrack extends Structure {
 	 * @param offset < Offset, in frames, from start of disk<br>
 	 * C type : Uint32
 	 */
-	public SDL_CDtrack(byte id, byte type, short unused, Uint32 length, Uint32 offset) {
+	public SDL_CDtrack(byte id, byte type, short unused, int/* Uint32 */ length, int/* Uint32 */ offset) {
 		super();
 		this.id = id;
 		this.type = type;
