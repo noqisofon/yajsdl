@@ -4,10 +4,15 @@
  */
 package yajsdl.events;
 
+import yajsdl.SDLException;
+
+
 /**
  *
  * @author rihine
  */
-class SDLEventException extends Exception {
-    
+public class SDLEventException extends SDLException {
+    public SDLEventException(String message) {
+        super( message );
+    }
 }

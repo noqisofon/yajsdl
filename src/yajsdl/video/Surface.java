@@ -95,6 +95,15 @@ public class Surface implements Disposable {
     public boolean isDisposed() {
         return this.is_disposed_;
     }
+
+
+    /**
+     * 
+     */
+    public boolean isMustLock() {
+        return this.content_.offset != 0 ||
+            ( this.content_.flags & (SDLLibrary.SDL_HWSURFACE | SDLLibrary.SDL_ASYNCBLIT | SDLLibrary.SDL_RLEACCEL) ) != 0;
+    }
     
     
     /**
@@ -208,10 +217,10 @@ public class Surface implements Disposable {
      */
     protected void baseUpdateRect(int x, int y, int width, int height) {
         SDLLibrary.INSTANCE.SDL_UpdateRect( content_,
-                                            ValueType.toSint32( x ),
-                                            ValueType.toSint32( y ),
-                                            ValueType.toUint32( width ),
-                                            ValueType.toUint32( height ) );
+                                             x,
+                                             y,
+                                             width,
+                                             height );
     }
 
 
@@ -260,9 +269,7 @@ public class Surface implements Disposable {
     
     
     static SDL_Surface baseSetVideoMode(int width, int height, int bpp, int flags) {
-        Uint32 surface_flags = ValueType.toUint32( flags );
-        
-        return SDLLibrary.INSTANCE.SDL_SetVideoMode( width, height, bpp, surface_flags );
+        return SDLLibrary.INSTANCE.SDL_SetVideoMode( width, height, bpp, flags );
     }
 
 

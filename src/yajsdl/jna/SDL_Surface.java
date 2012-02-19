@@ -15,7 +15,7 @@ public class SDL_Surface extends Structure {
 	 * < Read-only<br>
 	 * C type : Uint32
 	 */
-	public Uint32 flags;
+	public int/* Uint32 */ flags;
 	/**
 	 * < Read-only<br>
 	 * C type : SDL_PixelFormat*
@@ -52,13 +52,13 @@ public class SDL_Surface extends Structure {
 	 * < for binary compatibility<br>
 	 * C type : Uint32
 	 */
-	public Uint32 unused1;
+	public int/* Uint32 */ unused1;
 	/**
 	 * Allow recursive locks<br>
 	 * < Private<br>
 	 * C type : Uint32
 	 */
-	public Uint32 locked;
+	public int/* Uint32 */ locked;
 	/**
 	 * info for fast blit mapping to other surfaces<br>
 	 * < Private<br>

@@ -4,6 +4,7 @@
  */
 package yajsdl.video;
 
+import yajsdl.jna.SDLLibrary;
 import yajsdl.jna.SDL_Surface;
 
 /**
@@ -11,6 +12,12 @@ import yajsdl.jna.SDL_Surface;
  * @author rihine
  */
 public class Screen extends Surface {
+
+    public static final int SYSTEM_MEMORY = SDLLibrary.SDL_SWSURFACE;
+    public static final int VIDEO_MEMORY = SDLLibrary.SDL_HWSURFACE;
+    public static final int ASYNC_BLIT = SDLLibrary.SDL_ASYNCBLIT;
+
+
     /**
      *
      */

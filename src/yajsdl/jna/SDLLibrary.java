@@ -3,9 +3,12 @@ package yajsdl.jna;
 import com.sun.jna.*;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
+import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.ptr.ShortByReference;
+
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 
 public interface SDLLibrary extends Library {
@@ -61,7 +64,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    Uint8 SDL_GetAppState();
+    byte/* Uint8 */ SDL_GetAppState();
     /* @} */
 
 
@@ -1585,10 +1588,58 @@ public interface SDLLibrary extends Library {
     /** @name Video functions                                                    */  /* @{ */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+
+    public static final int SDL_ALPHA_OPAQUE      = 255;
+    public static final int SDL_ALPHA_TRANSPARENT =   0;
+
+    public static final int SDL_SWSURFACE = 0x00000000;  /**< Surface is in system memory */
+    public static final int SDL_HWSURFACE = 0x00000001;  /**< Surface is in video memory */
+    public static final int SDL_ASYNCBLIT = 0x00000004;  /**< Use asynchronous blits if possible */
+
+    public static final int SDL_ANYFORMAT   = 0x10000000;  /**< Allow any video depth/pixel-format */
+    public static final int SDL_HWPALETTE   = 0x20000000;  /**< Surface has exclusive palette */
+    public static final int SDL_DOUBLEBUF   = 0x40000000;  /**< Set up double-buffered video mode */
+    public static final int SDL_FULLSCREEN  = 0x80000000;  /**< Surface is a full screen display */
+    public static final int SDL_OPENGL      = 0x00000002;  /**< Create an OpenGL rendering context */
+    public static final int SDL_OPENGLBLIT  = 0x0000000A;  /**< Create an OpenGL rendering context and use it for blitting */
+    public static final int SDL_RESIZABLE   = 0x00000010;  /**< This video mode may be resized */
+    public static final int SDL_NOFRAME     = 0x00000020;  /**< No window caption or edge frame */
+
+    public static final int SDL_HWACCEL     = 0x00000100;  /**< Blit uses hardware acceleration */
+    public static final int SDL_SRCCOLORKEY = 0x00001000;  /**< Blit uses a source color key */
+    public static final int SDL_RLEACCELOK  = 0x00002000;  /**< Private flag */
+    public static final int SDL_RLEACCEL    = 0x00004000;  /**< Surface is RLE encoded */
+    public static final int SDL_SRCALPHA    = 0x00010000;  /**< Blit uses source alpha blending */
+    public static final int SDL_PREALLOC    = 0x01000000;  /**< Surface uses preallocated memory */
+
+
     /// typedef for private surface blitting functions
     public interface SDL_blit extends Callback {
         int apply(SDL_Surface src, SDL_Rect srcrect, SDL_Surface dst, SDL_Rect dstrect);
     }
+
+
+    public static final int SDL_YV12_OVERLAY = 0x32315659;    /**< Planar mode: Y + V + U  (3 planes) */
+    public static final int SDL_IYUV_OVERLAY = 0x56555949;    /**< Planar mode: Y + U + V  (3 planes) */
+    public static final int SDL_YUY2_OVERLAY = 0x32595559;    /**< Packed mode: Y0+U0+Y1+V0 (1 plane) */
+    public static final int SDL_UYVY_OVERLAY = 0x59565955;    /**< Packed mode: U0+Y0+V0+Y1 (1 plane) */
+    public static final int SDL_YVYU_OVERLAY = 0x55595659;    /**< Packed mode: Y0+V0+Y1+U0 (1 plane) */
+
+
+    public static final int SDL_LOGPAL  = 0x01;
+    public static final int SDL_PHYSPAL = 0x02;
+
+
+    /**
+     * 
+     */
+    int SDL_VideoInit(String driver_name, int/* Uint32 */ flags);
+
+
+    /**
+     * 
+     */
+    void SDL_VideoQuit();
 
 
     /**
@@ -1601,36 +1652,36 @@ public interface SDLLibrary extends Library {
      * ビデオハードウェアについての情報を持つオブジェクトを返します。
      */
     SDL_VideoInfo SDL_GetVideoInfo();
-    
-    
-    /**
-     *
-     */
-    SDL_Surface  SDL_SetVideoMode(int width, int height, int bpp, Uint32 flags);
 
 
     /**
      * ビデオドライバの名前を取得します。
      */
-    String SDL_VideoDriverName(String namebuf, int maxlen);
+    Pointer/* char* */ SDL_VideoDriverName(Pointer/* char* */ namebuf, int maxlen);
 
 
     /**
      * 指定されたフォーマットとビデオ初期化フラグに対し、利用可能な画面モードの配列を返します。
      */
-    SDL_Rect[] SDL_ListModes(SDL_PixelFormat format, int flags);
+    PointerByReference/* SDL_Rect** */ SDL_ListModes(SDL_PixelFormat format, int flags);
+    
+    
+    /**
+     *
+     */
+    SDL_Surface  SDL_SetVideoMode(int width, int height, int bpp, int/* Uint32 */ flags);
 
 
     /**
      * ある特定のビデオモードがサポートされているかチェックします。
      */
-    int SDL_VideoModeOK(int width, int height, int bpp, Uint32 flags);
+    int SDL_VideoModeOK(int width, int height, int bpp, int/* Uint32 */ flags);
 
 
     /**
      * 与えられた領域の画面を更新します。
      */
-    void SDL_UpdateRect(SDL_Surface screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h);
+    void SDL_UpdateRect(SDL_Surface screen, int/* Sint32 */ x, int/* Sint32 */ y, int/* Uint32 */ w, int/* Uint32 */ h);
 
 
     /**
@@ -1672,7 +1723,7 @@ public interface SDLLibrary extends Library {
     /**
      * 表示のためのカラーガンマ値の変換テーブルを設定します。
      */
-    int SDL_SetGammaRamp(ShortByReference redtable, ShortByReference greentable, ShortByReference bluetable);
+    int SDL_SetGammaRamp(ShortBuffer/* const Uint16 */ redtable, ShortBuffer/* const Uint16 */ greentable, ShortBuffer/* const Uint16 */ bluetable);
 
 
     /**
@@ -1690,13 +1741,13 @@ public interface SDLLibrary extends Library {
     /**
      * 指定されたピクセルフォーマット内のピクセルから RGB 値を取得します。
      */
-    void SDL_GetRGB(int pixel, SDL_PixelFormat fmt, ShortByReference r, ShortByReference g, ShortByReference b);
+    void SDL_GetRGB(int pixel, SDL_PixelFormat fmt, ByteByReference r, ByteByReference g, ByteByReference b);
 
 
     /**
      * 指定されたピクセルフォーマット内のピクセルから RGBA 値を取得します。
      */
-    void SDL_GetRGBA(int pixel, SDL_PixelFormat fmt, ShortByReference r, ShortByReference g, ShortByReference b, ShortByReference a);
+    void SDL_GetRGBA(int pixel, SDL_PixelFormat fmt, ByteByReference r, ByteByReference g, ByteByReference b, ByteByReference a);
 
 
     /**
@@ -1732,25 +1783,25 @@ public interface SDLLibrary extends Library {
     /**
      * BMP ファイルを読み込み、SDL_Surface として返します。
      */
-    SDL_Surface SDL_LoadBMP(String file);
+    SDL_Surface SDL_LoadBMP_RW(SDL_RWops src, int freesrc);
 
 
     /**
      * SDL_Surface オブジェクトを BMP ファイルとして保存します。
      */
-    int SDL_SaveBMP(SDL_Surface surface, String file);
+    int SDL_SaveBMP_RW(SDL_Surface surface, SDL_RWops dst, int freedst);
 
 
     /**
      * blit 転送可能なサーフェスのカラーキー(透明ピクセル)と、RLE アクセラレーションを設定します。
      */
-    int SDL_SetColorKey(SDL_Surface surface, int flag, int key);
+    int SDL_SetColorKey(SDL_Surface surface, int/* Uint32 */ flag, int/* Uint32 */ key);
 
 
     /**
      * サーフェスのアルファ値を調整します。
      */
-    int SDL_SetAlpha(SDL_Surface surface, int flag, int alpha);
+    int SDL_SetAlpha(SDL_Surface surface, int/* Uint32 */ flag, byte/* Uint8 */ alpha);
 
 
     /**
@@ -1768,7 +1819,7 @@ public interface SDLLibrary extends Library {
     /**
      * サーフェスを指定されたフォーマットとして新しいサーフェスに変換し直します。
      */
-    SDL_Surface SDL_ConvertSurface(SDL_Surface src, SDL_PixelFormat fmt, int flags);
+    SDL_Surface SDL_ConvertSurface(SDL_Surface src, SDL_PixelFormat fmt, int/* Uint32 */ flags);
 
 
     /**
@@ -1786,7 +1837,7 @@ public interface SDLLibrary extends Library {
     /**
      * サーフェスに指定された色と矩形で高速な塗りつぶしを行います。
      */
-    int SDL_FillRect(SDL_Surface dst, SDL_Rect dstrect, int color);
+    int SDL_FillRect(SDL_Surface dst, SDL_Rect dstrect, int/* Uint32 */ color);
 
 
     /**
