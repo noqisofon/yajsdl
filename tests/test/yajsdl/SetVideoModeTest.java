@@ -12,9 +12,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import yajsdl.SDL;
-import yajsdl.SDLException;
-import yajsdl.video.Screen;
+import org.yajsdl.SDL;
+import org.yajsdl.SDLException;
+import org.yajsdl.jna.SDL_Surface;
+import org.yajsdl.video.Screen;
 
 
 /**
@@ -23,20 +24,33 @@ import yajsdl.video.Screen;
  */
 public class SetVideoModeTest {
 
-    @BeforeClass
-    public static void setupSDL() throws SDLException {
+    @Before
+    public void setupSDL() throws SDLException {
         SDL.init( SDL.INIT_VIDEO );
     }
 
 
-    @AfterClass
-    public static void tearDownSDL() {
+    @After
+    public void tearDownSDL() {
         SDL.quit();
     }
 
 
     @Test
     public void notSetVideoMode() {
+        assertEquals( Screen.videoModeOK( 0, 0, 0, 0 ), 0 );
         Screen screen = Screen.setVideoMode( 0, 0, 0, 0 );
+        SDL_Surface content = screen.toSource();
+
+        assertNotNull( content );
+
+        System.out.format( "screen.width = %d\n", content.w );
+        System.out.format( "screen.height = %d\n", content.h );
+        System.out.format( "screen.flags = %x\n", content.flags );
+        System.out.format( "screen.pitch = %d\n", content.pitch );
+        System.out.format( "screen.locked = %d\n", content.locked );
+        System.out.format( "screen.format_version = %d\n", content.format_version );
+
+        assertTrue( screen.isScreen() );
     }
 }

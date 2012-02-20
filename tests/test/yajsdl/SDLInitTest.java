@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import yajsdl.SDL;
-import yajsdl.SDLException;
+import org.yajsdl.SDL;
+import org.yajsdl.SDLException;
 
 
 /**
@@ -49,8 +49,8 @@ public class SDLInitTest {
     public void notInitSDL() throws SDLException {
         boolean ret;
 
-        System.out.println( "SDL.init 16777217" );
-        ret = SDL.init( 16777217 );
+        System.out.println( "SDL.init 4" );
+        ret = SDL.init( 4 );
 
         System.out.println( ret );
         assertFalse( ret );

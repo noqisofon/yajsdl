@@ -16,7 +16,7 @@
 *.Po
 *.class
 
-bin/
+/bin/
 /nbproject/private/
 /build/
 /dist/
