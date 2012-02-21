@@ -9,7 +9,7 @@ import com.sun.jna.Structure;
 public class SDL_Palette extends Structure {
 	public int ncolors;
 	/// C type : SDL_Color*
-	public org.yajsdl.jna.SDL_Color.ByReference colors;
+	public SDL_Color[] colors;
 	public SDL_Palette() {
 		super();
 		initFieldOrder();
@@ -18,7 +18,7 @@ public class SDL_Palette extends Structure {
 		setFieldOrder(new java.lang.String[]{"ncolors", "colors"});
 	}
 	/// @param colors C type : SDL_Color*
-	public SDL_Palette(int ncolors, org.yajsdl.jna.SDL_Color.ByReference colors) {
+	public SDL_Palette(int ncolors, SDL_Color[] colors) {
 		super();
 		this.ncolors = ncolors;
 		this.colors = colors;

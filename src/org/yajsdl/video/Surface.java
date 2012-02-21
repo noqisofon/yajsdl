@@ -24,6 +24,7 @@ package org.yajsdl.video;
 import com.sun.jna.Pointer;
 import java.nio.ByteBuffer;
 import org.yajsdl.Disposable;
+import org.yajsdl.geom.Rect;
 import org.yajsdl.jna.SDLLibrary;
 import org.yajsdl.jna.SDL_Color;
 import org.yajsdl.jna.SDL_Rect;
@@ -190,13 +191,7 @@ public class Surface implements Disposable {
                                                           int flags,
                                                           int width, int height, int depth,
                                                           int redMask, int greenMask, int blueMask, int alphaMask) {
-        Pointer pixel = new Pointer( 0 );
-        byte[] temp_bry = new byte[pixelBuffer.limit()];
-
-        pixelBuffer.get( temp_bry );
-        pixel.write( 0, temp_bry, 0, temp_bry.length );
-
-        return  SDLLibrary.INSTANCE.SDL_CreateRGBSurfaceFrom( pixel,
+        return  SDLLibrary.INSTANCE.SDL_CreateRGBSurfaceFrom( pixelBuffer,
                                                               flags,
                                                               width, height, depth,
                                                               redMask, greenMask, blueMask,

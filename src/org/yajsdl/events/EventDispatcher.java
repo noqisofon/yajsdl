@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.Vector;
 import org.yajsdl.jna.SDLLibrary;
 import org.yajsdl.jna.SDL_Event;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import yajsdl.utils.*;
 
 
@@ -47,6 +49,7 @@ public class EventDispatcher implements Runnable {
     /**
      *
      */
+    @Override
     public void run() {
         try {
             Event event = waitEvent();
@@ -60,16 +63,16 @@ public class EventDispatcher implements Runnable {
                         }
                     }
                 } else {
-                    Log.debug( "EventDispatcher#run event is null." );
+                    logger.debug( "EventDispatcher#run event is null." );
                 }
             }
         } catch ( SDLEventException see ) {
-            Log.error( "EventDispatcher#run SDLException:", see );
+            logger.error( "EventDispatcher#run SDLException:", see );
         } catch ( Exception e ) {
-            Log.error( "EventDispatcher#run Exception found:", e );
+            logger.error( "EventDispatcher#run Exception found:", e );
         }
         this.stopped_ = true;
-        Log.debug( "EventDispatcher is quitting." );
+        logger.debug( "EventDispatcher is quitting." );
     }
 
 
@@ -77,12 +80,12 @@ public class EventDispatcher implements Runnable {
      * 
      */
     public Event pollEvent() {
-        Log.debug( "EventDispatcher#pollEvent inside ..." );
+        logger.debug( "EventDispatcher#pollEvent inside ..." );
 
         Event event = this.basePollEvent();
 
         if ( event != null ) {
-            Log.debug( "EventDispatcher#pollEvent returning non null" );
+            logger.debug( "EventDispatcher#pollEvent returning non null" );
 
             return event;
         }
@@ -102,7 +105,7 @@ public class EventDispatcher implements Runnable {
         }
         return true;
         //}
-        //Log.debug( "EventDispatcher only pushes SDLUserEvents." );
+        //logger.debug( "EventDispatcher only pushes SDLUserEvents." );
 
         //return false;
     }
@@ -204,5 +207,7 @@ public class EventDispatcher implements Runnable {
     private volatile boolean stopped_ = false;
     private int handle_poll_event_ = 0;
 
-    private final static boolean DEBUG = false;
+    //private final static boolean DEBUG = false;
+    
+    private static Logger logger = LoggerFactory.getLogger( EventDispatcher.class );
 }

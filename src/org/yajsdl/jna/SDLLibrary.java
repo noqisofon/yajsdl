@@ -5,6 +5,7 @@ import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 import com.sun.jna.ptr.ByteByReference;
 import com.sun.jna.ptr.ShortByReference;
+import java.nio.Buffer;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -99,7 +100,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    String SDL_AudioDriverName(String namebuf, int maxlen);
+    ByteBuffer/* char* */ SDL_AudioDriverName(ByteBuffer/* char* */ namebuf, int maxlen);
 
 
     /**
@@ -130,7 +131,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    SDL_AudioSpec SDL_LoadWAV_RW(SDL_RWops src, int freesrc, SDL_AudioSpec spec, PointerByReference/* Uint8** */audio_buf, Pointer/* Uint8* */ audio_len);
+    SDL_AudioSpec SDL_LoadWAV_RW(SDL_RWops src, int freesrc, SDL_AudioSpec spec, PointerByReference/* Uint8** */audio_buf, IntByReference/* Uint32* */ audio_len);
 
 
     /**
@@ -162,7 +163,7 @@ public interface SDLLibrary extends Library {
      * @param len
      * @param volume
      */
-    void SDL_MixAudio(Pointer/* Uint8* */ dst, Pointer/* const Uint8* */src, int/* Uint32 */ len, int volume);
+    void SDL_MixAudio(ByteBuffer/* Uint8* */ dst, ByteBuffer/* const Uint8* */src, int/* Uint32 */ len, int volume);
 
 
     /**
@@ -709,7 +710,7 @@ public interface SDLLibrary extends Library {
     /**
      *
      */
-    int SDL_JoystickGetBall(SDL_Joystick joystick, int ball, Pointer/* int* */ dx, Pointer/* int* */ dy);
+    int SDL_JoystickGetBall(SDL_Joystick joystick, int ball, IntByReference/* int* */ dx, IntByReference/* int* */ dy);
 
 
     /**
@@ -1657,7 +1658,7 @@ public interface SDLLibrary extends Library {
     /**
      * ビデオドライバの名前を取得します。
      */
-    Pointer/* char* */ SDL_VideoDriverName(Pointer/* char* */ namebuf, int maxlen);
+    ByteBuffer/* char* */ SDL_VideoDriverName(ByteBuffer/* char* */ namebuf, int maxlen);
 
 
     /**
@@ -1717,7 +1718,7 @@ public interface SDLLibrary extends Library {
     /**
      * 表示のためのカラーガンマ値の変換テーブルを取得します。
      */
-    int SDL_GetGammaRamp(ShortByReference redtable, ShortByReference greentable, ShortByReference bluetable);
+    int SDL_GetGammaRamp(ShortBuffer redtable, ShortBuffer greentable, ShortBuffer bluetable);
 
 
     /**
@@ -1759,7 +1760,7 @@ public interface SDLLibrary extends Library {
     /**
      * 空の SDL_Surface オブジェクトを作成します。
      */
-    SDL_Surface SDL_CreateRGBSurfaceFrom(Pointer/* void* */ pixels, int flags, int width, int height, int depth, int Rmask, int Gmask, int Bmask, int Amask);
+    SDL_Surface SDL_CreateRGBSurfaceFrom(Buffer/* void* */ pixels, int flags, int width, int height, int depth, int Rmask, int Gmask, int Bmask, int Amask);
 
 
     /**
@@ -1901,7 +1902,7 @@ public interface SDLLibrary extends Library {
     /**
      * 
      */
-    void SDL_WM_GetCaption(PointerByReference title, PointerByReference icon);
+    void SDL_WM_GetCaption(String[] title, String[] icon);
 
 
     /**
