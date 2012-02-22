@@ -1586,6 +1586,47 @@ public interface SDLLibrary extends Library {
 
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    /** @name R/W options functions                                              */  /* @{ */
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    /**
+     * 
+     */
+    SDL_RWops SDL_RWFromFile(String file, String mode);
+
+
+    /*
+     * 
+     */
+    //SDL_RWops SDL_RWFromFP(FILE fp, int autoclose);
+
+
+    /**
+     * 
+     */
+    SDL_RWops SDL_RWFromMem(Pointer/* void* */ mem, int size);
+
+
+    /**
+     * 
+     */
+    SDL_RWops SDL_RWFromConstMem(ByteBuffer/* void* */ mem, int size);
+
+
+    /**
+     *
+     */
+    SDL_RWops SDL_AllocRW();
+
+
+    /**
+     *
+     */
+    void SDL_FreeRW(SDL_RWops area);
+    /* @} */
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     /** @name Video functions                                                    */  /* @{ */
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 

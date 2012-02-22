@@ -21,14 +21,10 @@
 //
 package org.yajsdl.video;
 
-import com.sun.jna.Pointer;
 import java.nio.ByteBuffer;
 import org.yajsdl.Disposable;
 import org.yajsdl.geom.Rect;
-import org.yajsdl.jna.SDLLibrary;
-import org.yajsdl.jna.SDL_Color;
-import org.yajsdl.jna.SDL_Rect;
-import org.yajsdl.jna.SDL_Surface;
+import org.yajsdl.jna.*;
 
 
 /**
@@ -138,9 +134,17 @@ public class Surface implements Disposable {
     @Override
     public void dispose() {
         if ( this.is_disposed_ != true ) {
-            SDLLibrary.INSTANCE.SDL_FreeSurface( this.content_ );
+            this.baseFreeSurface();
             this.is_disposed_ = true;
         }
+    }
+
+
+    /**
+     * 
+     */
+    public Surface loadBitmap(String filepath) {
+        return baseLoadBMP( filepath );
     }
 
 
@@ -196,6 +200,24 @@ public class Surface implements Disposable {
                                                               width, height, depth,
                                                               redMask, greenMask, blueMask,
                                                               alphaMask );
+    }
+
+
+    /**
+     *
+     */
+    protected void baseFreeSurface() {
+        SDLLibrary.INSTANCE.SDL_FreeSurface( this.content_ );
+    }
+
+
+    /**
+     * 
+     */
+    protected static Surface baseLoadBMP(String filepath) {
+        SDL_RWops src = SDLLibrary.INSTANCE.SDL_RWFromFile( filepath, "rb" );
+
+        return new Surface( SDLLibrary.INSTANCE.SDL_LoadBMP_RW( src, 1 ) );
     }
 
 
