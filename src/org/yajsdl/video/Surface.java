@@ -320,6 +320,9 @@ public class Surface implements Disposable {
     }
     
     
+    /**
+     * 
+     */
     static SDL_Surface baseSetVideoMode(int width, int height, int bpp, int flags) {
         return SDLLibrary.INSTANCE.SDL_SetVideoMode( width, height, bpp, flags );
     }

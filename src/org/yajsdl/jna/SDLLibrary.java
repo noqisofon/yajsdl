@@ -26,6 +26,8 @@ public interface SDLLibrary extends Library {
 
     /**
      * SDL を初期化します。
+     * @param flags
+     * @return  
      */
     int SDL_Init(int flags);
 
@@ -553,7 +555,7 @@ public interface SDLLibrary extends Library {
     /**
      * イベントキューをチェックしてイベントの数を返します。
      */
-    int SDL_PeepEvents(SDL_Event event, int numevents, SDL_eventaction action, int/* Uint32 */ mask);
+    int SDL_PeepEvents(SDL_Event[] event, int numevents, int/* SDL_eventaction */ action, int/* Uint32 */ mask);
 
 
     /**

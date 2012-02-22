@@ -10,7 +10,7 @@ import org.yajsdl.jna.SDL_Event;
  *
  * @author rihine
  */
-public class CustomEvent extends Event {
+public class CustomEvent extends SDLEvent {
     /**
      *
      */
@@ -21,6 +21,7 @@ public class CustomEvent extends Event {
     
     /**
      *
+     * @return 
      */
     @Override
     public SDL_Event toSource() {

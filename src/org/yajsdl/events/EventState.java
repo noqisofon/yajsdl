@@ -13,6 +13,7 @@ public enum EventState {
 
 
     public byte toByte() { return (byte)this.value_; }
+    public int toInt() { return this.value_; }
 
 
     private int value_;

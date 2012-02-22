@@ -44,6 +44,9 @@ public final class SDL {
 
     /**
      * 指定されたフラグを渡して SDL システムを初期化します。
+     * @param flags
+     * @return
+     * @throws SDLException  
      */
     public static boolean init(int flags) throws SDLException {
         int ret;
@@ -59,6 +62,9 @@ public final class SDL {
 
     /**
      * 指定されたフラグに対応する SDL サブシステムを初期化します。
+     * @param flags
+     * @return
+     * @throws SDLException  
      */
     public static boolean initSubSystem(int flags) throws SDLException {
         int ret;
@@ -74,6 +80,8 @@ public final class SDL {
 
     /**
      * 指定されたフラグに対応する SDL サブシステムが初期化されているかどうかの論理和を返します。
+     * @param flags
+     * @return  
      */
     public static boolean wasInit(int flags) {
         return (SDLLibrary.INSTANCE.SDL_WasInit( flags ) & flags) == flags;
@@ -82,6 +90,7 @@ public final class SDL {
 
     /**
      * SDL ビデオサブシステムが初期化されていれば真を返します。
+     * @return 
      */
     public static boolean wasInitVideo() {
         int flags = SDL.INIT_VIDEO;
@@ -93,6 +102,7 @@ public final class SDL {
 
     /**
      * SDL オーディオサブシステムが初期化されていれば真を返します。
+     * @return 
      */
     public static boolean wasInitAudio() {
         int flags = SDL.INIT_AUDIO;
@@ -104,6 +114,7 @@ public final class SDL {
 
     /**
      * SDL タイマーサブシステムが初期化されていれば真を返します。
+     * @return 
      */
     public static boolean wasInitTimer() {
         int flags = SDL.INIT_TIMER;
@@ -123,6 +134,9 @@ public final class SDL {
 
     /**
      * 指定されたフラグに対応する SDL サブシステムをシャットダウンします。
+     * @param flags
+     * @return
+     * @throws SDLException  
      */
     public static boolean quitSubSystem(int flags) throws SDLException {
         int ret;

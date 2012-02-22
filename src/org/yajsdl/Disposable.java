@@ -22,9 +22,19 @@
 package org.yajsdl;
 
 
+/**
+ *
+ */
 public interface Disposable {
+    /**
+     *
+     * @return 
+     */
     boolean isDisposed();
 
 
+    /**
+     *
+     */
     void dispose();
 }

@@ -16,21 +16,21 @@ public class Palette extends AbstractSet<Color> {
      */
     public Palette() {
         super();
-        this.content_ = new HashSet<>();
+        this.content_ = new HashSet<Color>();
     }
     /**
      *
      */
     public Palette(Collection<? extends Color> collection) {
         super();
-        this.content_ = new HashSet<>( collection );
+        this.content_ = new HashSet<Color>( collection );
     }
     /**
      *
      */
     public Palette(int initialCapacity) {
         super();
-        this.content_ = new HashSet<>( initialCapacity );
+        this.content_ = new HashSet<Color>( initialCapacity );
     }
     
     /**
@@ -38,7 +38,7 @@ public class Palette extends AbstractSet<Color> {
      */
     public Palette(int initialCapacity, float loadFactior) {
         super();
-        this.content_ = new HashSet<>( initialCapacity, loadFactior );
+        this.content_ = new HashSet<Color>( initialCapacity, loadFactior );
     }
 
 

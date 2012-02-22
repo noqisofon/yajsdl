@@ -5,7 +5,6 @@
 package org.yajsdl.video;
 
 import org.yajsdl.jna.SDLLibrary;
-import org.yajsdl.jna.SDL_Surface;
 
 /**
  *
@@ -33,6 +32,10 @@ public class Screen extends Surface {
 
     /**
      * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height  
      */
     public void updateRect(int x, int y, int width, int height) {
         super.baseUpdateRect( x, y, width, height );
@@ -49,6 +52,7 @@ public class Screen extends Surface {
     
     /**
      * 常に真を返します。
+     * @return 
      */
     @Override
     public boolean isScreen() {

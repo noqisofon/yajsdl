@@ -23,6 +23,10 @@ public class Rect implements Cloneable {
     }
     /**
      *
+     * @param x
+     * @param y
+     * @param width
+     * @param height  
      */
     public Rect(int x, int y, int width, int height) {
         this.x_ = x;
@@ -32,6 +36,7 @@ public class Rect implements Cloneable {
     }
     /**
      *
+     * @param other 
      */
     public Rect(Rect other) {
         this.x_ = other.x_;
@@ -43,6 +48,7 @@ public class Rect implements Cloneable {
 
     /**
      *
+     * @return 
      */
     @Override
     public Rect clone() {
@@ -52,54 +58,65 @@ public class Rect implements Cloneable {
 
     /**
      *
+     * @return 
      */
     public int getX() { return this.x_; }
 
 
     /**
      *
+     * @return 
      */
     public int getY() { return this.y_; }
 
 
     /**
      *
+     * @return 
      */
     public int getWidth() { return this.width_; }
 
 
     /**
      *
+     * @return 
      */
     public int getHeight() { return this.height_; }
 
 
     /**
      * 
+     * @return 
      */
     public int getTop() { return this.y_; }
 
 
     /**
      * 
+     * @return 
      */
     public int getLeft() { return this.x_; }
 
 
     /**
      * 
+     * @return 
      */
     public int getBottom() { return this.y_ + this.height_; }
 
 
     /**
      * 
+     * @return 
      */
     public int getRight() { return this.x_ + this.width_; }
 
 
     /**
      *
+     * @param x
+     * @param y
+     * @return  
      */
     public boolean contains(int x, int y) {
         return (this.x_ <= x && this.x_ + this.width_ > x)
@@ -109,6 +126,8 @@ public class Rect implements Cloneable {
 
     /**
      *
+     * @param point
+     * @return  
      */
     public boolean containsPoint(Point point) {
         return (this.x_ <= point.getX() && this.x_ + this.width_ > point.getX())
@@ -118,6 +137,8 @@ public class Rect implements Cloneable {
 
     /**
      *
+     * @param rect
+     * @return  
      */
     public boolean containsRect(Rect rect) {
         return this.getLeft() <= rect.getLeft();
@@ -126,6 +147,7 @@ public class Rect implements Cloneable {
 
     /**
      * 
+     * @return 
      */
     public boolean isEmpty() {
         return this.x_ == 0
@@ -137,6 +159,7 @@ public class Rect implements Cloneable {
     
     /**
      *
+     * @return 
      */
     public SDL_Rect toSource() {
         return new SDL_Rect( (short)this.x_, (short)this.y_, (short)this.width_, (short)this.height_ );

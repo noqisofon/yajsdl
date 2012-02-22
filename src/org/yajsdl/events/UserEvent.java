@@ -11,17 +11,19 @@ import org.yajsdl.jna.SDL_Event;
  *
  * @author rihine
  */
-public class UserEvent extends Event {
+public class UserEvent extends SDLEvent {
     /**
      *
+     * @param eventType 
      */
-    UserEvent(EventType eventType) {
+    public UserEvent(EventType eventType) {
         super( eventType );
     }
 
     
     /**
      *
+     * @return 
      */
     @Override
     public SDL_Event toSource() {

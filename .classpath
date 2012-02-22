@@ -4,5 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="/usr/share/java/jna/jna.jar"/>
 	<classpathentry exported="true" kind="lib" path="/usr/share/java/jna/platform.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/slf4j/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/slf4j/slf4j-ext.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/slf4j/slf4j-log4j12.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

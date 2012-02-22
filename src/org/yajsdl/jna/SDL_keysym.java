@@ -31,9 +31,6 @@ public class SDL_keysym extends Structure {
 		super();
 		initFieldOrder();
 	}
-	protected void initFieldOrder() {
-		setFieldOrder(new java.lang.String[]{"scancode", "sym", "mod", "unicode"});
-	}
 	/**
 	 * @param scancode < hardware specific scancode<br>
 	 * C type : Uint8<br>
@@ -52,6 +49,13 @@ public class SDL_keysym extends Structure {
 		this.unicode = unicode;
 		initFieldOrder();
 	}
+    
+    
+	protected void initFieldOrder() {
+		setFieldOrder(new java.lang.String[]{"scancode", "sym", "mod", "unicode"});
+	}
+    
+    
 	public static class ByReference extends SDL_keysym implements Structure.ByReference {
 		
 	};

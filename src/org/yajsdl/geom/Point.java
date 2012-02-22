@@ -21,6 +21,8 @@ public class Point implements Cloneable {
     }
     /**
      *
+     * @param x
+     * @param y  
      */
     public Point(int x, int y) {
         this.x_ = x;
@@ -28,6 +30,7 @@ public class Point implements Cloneable {
     }
     /**
      *
+     * @param other 
      */
     public Point(Point other) {
         this.x_ = other.x_;
@@ -37,6 +40,7 @@ public class Point implements Cloneable {
 
     /**
      * 
+     * @return 
      */
     @Override
     public Point clone() {
@@ -46,6 +50,8 @@ public class Point implements Cloneable {
 
     /**
      * 
+     * @param v
+     * @return  
      */
     public Point add(Point v) {
         return new Point( this.x_ + v.x_, this.y_ + v.y_ );
@@ -54,6 +60,8 @@ public class Point implements Cloneable {
 
     /**
      * 
+     * @param other
+     * @return  
      */
     public boolean equals(Point other) {
         return this.x_ == other.x_ && this.y_ == other.y_;
@@ -62,6 +70,8 @@ public class Point implements Cloneable {
 
     /**
      * 
+     * @param dx
+     * @param dy  
      */
     public void offset(int dx, int dy) {
         this.x_ += dx;
@@ -71,6 +81,7 @@ public class Point implements Cloneable {
 
     /**
      *
+     * @return 
      */
     public int length() {
         return (int)Math.sqrt( this.x_ * this.x_ + this.y_ * this.y_ );
@@ -79,12 +90,14 @@ public class Point implements Cloneable {
 
     /**
      *
+     * @return 
      */
     public int getX() { return this.x_; }
 
     
     /**
      *
+     * @return 
      */
     public int getY() { return this.y_; }
 

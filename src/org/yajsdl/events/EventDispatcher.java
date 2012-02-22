@@ -1,175 +1,160 @@
 package org.yajsdl.events;
 
-import java.util.Iterator;
-import java.util.Vector;
-import org.yajsdl.jna.SDLLibrary;
-import org.yajsdl.jna.SDL_Event;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yajsdl.jna.SDLLibrary;
+import org.yajsdl.jna.SDL_Event;
 //import yajsdl.utils.*;
 
 
-public class EventDispatcher implements Runnable {
-
-
+public class EventDispatcher implements IEventDispatcher, Runnable {
     /**
-     *
+     * 
      */
-    public EventDispatcher(boolean shouldBeDaemon) {
-        this.daemon_ = shouldBeDaemon;
+    public EventDispatcher() {
+        this.target_ = null;
+    }
+    /**
+     * 
+     * @param target 
+     */
+    public EventDispatcher(IEventDispatcher target) {
+        this.target_ = target;
     }
 
 
     /**
-     *
+     * 
+     * @param eventType
+     * @param listener  
      */
-    public void start() {
-        this.thread_ = new Thread( this );
-        this.thread_.setDaemon( this.daemon_ );
-        this.thread_.start();
-    }
+    @Override
+    public void addEventListener(EventType eventType, EventListener listener) {
+        String event_type_name = eventType.name();
 
-
-    /**
-     *
-     */
-    public void startAndWait() {
-        this.stopped_ = false;
-
-        this.start();
-        while ( this.stopped_ == false ) {
-            try {
-                Thread.sleep( 500 );
-            } catch ( Exception e ) {
-            }
+        if ( !this.listeners_.containsKey( event_type_name ) ) {
+            /*
+              ArrayList への Collections.synchronizedList は要らないかもしれない。
+              が、一応。
+             */
+            this.listeners_.put( event_type_name, Collections.synchronizedList( new ArrayList<EventListener>() ) );
+        }
+        if ( !this.listeners_.get( event_type_name ).contains( listener ) ) {
+            this.listeners_.get( event_type_name ).add( listener );
         }
     }
 
-    
+
     /**
-     *
+     * 
+     * @param eventType
+     * @param listener  
+     */
+    @Override
+    public void removeEventListener(EventType eventType, EventListener listener) {
+        String event_type_name = eventType.name();
+        
+        if ( this.listeners_.get( event_type_name ).contains( listener ) ) {
+            this.listeners_.get( event_type_name ).remove( listener );
+        }
+    }
+
+
+    /**
+     * 
+     * @param event
+     * @throws SDLEventException  
+     */
+    public void dispatchEvent(SDLEvent event) throws SDLEventException {
+        this.basePushEvent( event );
+    }
+
+
+    /**
+     * 
+     * @return 
+     */
+    public SDLEvent pollEvent() {
+        return basePollEvent();
+    }
+
+
+    /**
+     * 
      */
     @Override
     public void run() {
-        try {
-            Event event = waitEvent();
-            while ( event != null ) {
+    }
 
-                if ( event != null ) {
-                    synchronized ( this.listeners_ ) {
-                        
-                        for ( Iterator<EventListener> it = this.listeners_.iterator(); it.hasNext(); ) {
-                            it.next().incomingEvents( event );
-                        }
-                    }
-                } else {
-                    logger.debug( "EventDispatcher#run event is null." );
-                }
-            }
-        } catch ( SDLEventException see ) {
-            logger.error( "EventDispatcher#run SDLException:", see );
-        } catch ( Exception e ) {
-            logger.error( "EventDispatcher#run Exception found:", e );
+
+    /**
+     * イベントキューから numEvents 個のイベントを取り出して返します。
+     * @param numEvents
+     * @return
+     * @throws SDLEventException  
+     */
+    protected SDLEvent[] basePeekEvent(int numEvents) throws SDLEventException {
+        int ret;
+        SDL_Event[] sdl_events = new SDL_Event[numEvents];
+        SDLEvent[] events;
+
+        ret = SDLLibrary.INSTANCE.SDL_PeepEvents( sdl_events,
+                                                  numEvents,
+                                                  SDLLibrary.SDL_eventaction.SDL_PEEKEVENT,
+                                                  0 );
+        if ( ret == -1 ) {
+            throw new SDLEventException( SDLLibrary.INSTANCE.SDL_GetError() );
         }
-        this.stopped_ = true;
-        logger.debug( "EventDispatcher is quitting." );
+        events = new SDLEvent[sdl_events.length];
+
+        for ( int i = 0; i < events.length; ++ i ) {
+            events[i] = SDLEvent.create( sdl_events[i] );
+        }
+        return events;
     }
 
 
     /**
      * 
+     * @param numEvents
+     * @return
+     * @throws SDLEventException  
      */
-    public Event pollEvent() {
-        logger.debug( "EventDispatcher#pollEvent inside ..." );
+    protected SDLEvent[] baseGetEvent(int numEvents) throws SDLEventException {
+        int ret;
+        SDL_Event[] sdl_events = new SDL_Event[numEvents];
+        SDLEvent[] events;
 
-        Event event = this.basePollEvent();
-
-        if ( event != null ) {
-            logger.debug( "EventDispatcher#pollEvent returning non null" );
-
-            return event;
+        ret = SDLLibrary.INSTANCE.SDL_PeepEvents( sdl_events,
+                                                  numEvents,
+                                                  SDLLibrary.SDL_eventaction.SDL_GETEVENT,
+                                                  0 );
+        if ( ret == -1 ) {
+            throw new SDLEventException( SDLLibrary.INSTANCE.SDL_GetError() );
         }
-        return null;
-    }
+        events = new SDLEvent[sdl_events.length];
 
-
-    /**
-     * 
-     */
-    public boolean pushEvent(Event event) {
-        //if ( event instanceof UserEvent ) {
-        try {
-            this.basePushEvent( event );
-        } catch ( SDLEventException see ) {
-            return false;
+        for ( int i = 0; i < events.length; ++ i ) {
+            events[i] = SDLEvent.create( sdl_events[i] );
         }
-        return true;
-        //}
-        //logger.debug( "EventDispatcher only pushes SDLUserEvents." );
-
-        //return false;
+        return events;
     }
-
-
-    /**
-     *
-     */
-    public int setEventState(EventState type, EventType state) {
-        return this.baseSetEventState( type, state );
-    }
-
-
-    /**
-     *
-     */
-    public boolean registerEventListener(EventListener listener) {
-        if ( !this.listeners_.contains( listener ) ) {
-            this.listeners_.add( listener );
-
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
-     *
-     */
-    public boolean unregisterEventListener(EventListener listener) {
-        if ( this.listeners_.contains( listener ) ) {
-            this.listeners_.remove( listener );
-
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
-     *
-     */
-    protected int baseSetEventState(EventState type, EventType state) {
-        byte ret;
-        byte event_type = type.toByte();
-        int event_state = state.toInteger();
-
-        ret = SDLLibrary.INSTANCE.SDL_EventState( event_type, event_state );
-        
-        return ret;
-    }
+    
     
 
     /**
      *
+     * @return 
      */
-    protected Event waitEvent() {
+    protected SDLEvent baseWaitEvent() {
         int ret;
         SDL_Event sdl_event = new SDL_Event();
-        Event ret_event = null;
+        SDLEvent ret_event = null;
 
         ret = SDLLibrary.INSTANCE.SDL_WaitEvent( sdl_event );
         if ( ret == 1 ) {
-            ret_event = Event.createEventFromSDLEvent( sdl_event );
+            ret_event = SDLEvent.create( sdl_event );
         } else if ( ret == 0 ) {
             return null;
         }
@@ -179,35 +164,43 @@ public class EventDispatcher implements Runnable {
    
     /**
      *
+     * @return 
      */
-    protected Event basePollEvent() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    protected SDLEvent basePollEvent() {
+        int ret;
+        SDLEvent event;
+        SDL_Event sdl_event = new SDL_Event();
+
+        ret = SDLLibrary.INSTANCE.SDL_PollEvent( sdl_event );
+        if ( ret == 1 ) {
+            event = SDLEvent.create( sdl_event );
+        } else {
+            return null;
+        }
+
+        return event;
     }
 
 
     /**
      *
+     * @param event
+     * @return
+     * @throws SDLEventException  
      */
-    protected boolean basePushEvent(Event event) throws SDLEventException {
+    protected boolean basePushEvent(SDLEvent event) throws SDLEventException {
         int ret;
         SDL_Event sdl_event = event.toSource();
 
         ret = SDLLibrary.INSTANCE.SDL_PushEvent( sdl_event );
 
-        if ( ret == 0 )
+        if ( ret == 0 ) {
             throw new SDLEventException( SDLLibrary.INSTANCE.SDL_GetError() );
-
+        }
         return true;
     }
 
 
-    private Vector<EventListener> listeners_ = new Vector<EventListener>();
-    private Thread thread_;
-    private boolean daemon_;
-    private volatile boolean stopped_ = false;
-    private int handle_poll_event_ = 0;
-
-    //private final static boolean DEBUG = false;
-    
-    private static Logger logger = LoggerFactory.getLogger( EventDispatcher.class );
+    private IEventDispatcher target_;
+    private Map<String, List<EventListener>> listeners_ = Collections.synchronizedMap( new HashMap<String, List<EventListener>>() );
 }
