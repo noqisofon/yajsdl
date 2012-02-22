@@ -143,7 +143,7 @@ public class Surface implements Disposable {
     /**
      * 
      */
-    public Surface loadBitmap(String filepath) {
+    public static Surface loadBitmap(String filepath) {
         return baseLoadBMP( filepath );
     }
 
