@@ -574,22 +574,31 @@ public interface SDLLibrary extends Library {
 
     /**
      * 
+     * @param event
+     * @return  
      */
-    int SDL_PollEvent(SDL_Event event);
+    int SDL_PollEvent(Pointer/* SDL_Event */ event);
+
+
+    /**
+     * 
+     * @param event
+     * @return  
+     */
+    int SDL_WaitEvent(Pointer/* SDL_Event */ event);
+
+
+    /**
+     * 
+     * @param event
+     * @return  
+     */
+    int SDL_PushEvent(SDL_Event.ByReference event);
 
 
     /**
      * 
      */
-    int SDL_WaitEvent(SDL_Event event);
-
-
-    /**
-     * 
-     */
-    int SDL_PushEvent(SDL_Event event);
-
-
     public interface SDL_EventFilter {
         int apply(SDL_Event event);
     }

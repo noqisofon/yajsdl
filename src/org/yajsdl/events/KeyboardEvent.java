@@ -93,10 +93,7 @@ public class KeyboardEvent extends SDLEvent {
      */
     @Override
     public SDL_Event toSource() {
-        
-        SDL_Event ret = new SDL_Event();
-        
-        return ret;
+        return new SDL_Event( this.content_ );
     }
     
     
@@ -109,9 +106,9 @@ public class KeyboardEvent extends SDLEvent {
         KeyboardEvent ret;
         
         if ( ke.type == SDLLibrary.SDL_EventType.SDL_KEYDOWN ) {
-            ret = new KeyboardEvent( EventType.KEYDOWN );
+            ret = new KeyboardEvent( EventType.KEY_DOWN );
         } else if ( ke.type == SDLLibrary.SDL_EventType.SDL_KEYUP ) {
-            ret = new KeyboardEvent( EventType.KEYUP );
+            ret = new KeyboardEvent( EventType.KEY_UP );
         } else {
             return null;
         }

@@ -48,13 +48,14 @@ public final class SDL {
      * @return
      * @throws SDLException  
      */
-    public static boolean init(int flags) throws SDLException {
+    public static boolean init(int flags) {
         int ret;
 
         ret = SDLLibrary.INSTANCE.SDL_Init( flags );
 
-        if ( ret != 0 )
-            throw new SDLException( SDLLibrary.INSTANCE.SDL_GetError() );
+        if ( ret != 0 ) {
+            return false;
+        }
 
         return true;
     }
@@ -66,14 +67,14 @@ public final class SDL {
      * @return
      * @throws SDLException  
      */
-    public static boolean initSubSystem(int flags) throws SDLException {
+    public static boolean initSubSystem(int flags) {
         int ret;
 
         ret = SDLLibrary.INSTANCE.SDL_InitSubSystem( flags );
 
-        if ( ret != 0 )
-            throw new SDLException( SDLLibrary.INSTANCE.SDL_GetError() );
-
+        if ( ret != 0 ) {
+            return false;
+        }
         return true;
     }
 
@@ -138,14 +139,14 @@ public final class SDL {
      * @return
      * @throws SDLException  
      */
-    public static boolean quitSubSystem(int flags) throws SDLException {
+    public static boolean quitSubSystem(int flags) {
         int ret;
 
         ret = SDLLibrary.INSTANCE.SDL_QuitSubSystem( flags );
 
-        if ( ret != 0 )
-            throw new SDLException( SDLLibrary.INSTANCE.SDL_GetError() );
-
+        if ( ret != 0 ) {
+            return false;
+        }
         return true;
     }
 }

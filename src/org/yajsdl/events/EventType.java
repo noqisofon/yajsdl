@@ -6,8 +6,8 @@ import org.yajsdl.jna.SDLLibrary;
 public enum EventType {
     NONE(SDLLibrary.SDL_EventType.SDL_NOEVENT),
     ACTIVE(SDLLibrary.SDL_EventType.SDL_ACTIVEEVENT),
-    KEYDOWN(SDLLibrary.SDL_EventType.SDL_KEYDOWN),
-    KEYUP(SDLLibrary.SDL_EventType.SDL_KEYUP),
+    KEY_DOWN(SDLLibrary.SDL_EventType.SDL_KEYDOWN),
+    KEY_UP(SDLLibrary.SDL_EventType.SDL_KEYUP),
     MOUSE_MOTION(SDLLibrary.SDL_EventType.SDL_MOUSEMOTION),
     MOUSE_BUTTON_DOWN(SDLLibrary.SDL_EventType.SDL_MOUSEBUTTONDOWN),
     MOUSE_BUTTON_UP(SDLLibrary.SDL_EventType.SDL_MOUSEBUTTONUP),

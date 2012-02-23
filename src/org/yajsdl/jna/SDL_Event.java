@@ -1,4 +1,5 @@
 package org.yajsdl.jna;
+import com.sun.jna.Pointer;
 import com.sun.jna.Union;
 /**
  * <i>native declaration : /usr/include/SDL/SDL_events.h</i><br>
@@ -37,6 +38,12 @@ public class SDL_Event extends Union {
 	public SDL_SysWMEvent syswm;
 	public SDL_Event() {
 		super();
+	}
+    public SDL_Event(Pointer p) {
+		super( p );
+	}
+    public SDL_Event(Pointer p, int alignment) {
+		super( p, alignment );
 	}
 	/// @param syswm C type : SDL_SysWMEvent
 	public SDL_Event(SDL_SysWMEvent syswm) {
@@ -122,10 +129,29 @@ public class SDL_Event extends Union {
 		this.key = key;
 		setType(org.yajsdl.jna.SDL_KeyboardEvent.class);
 	}
-	public static class ByReference extends SDL_Event implements com.sun.jna.Structure.ByReference {
-		
-	};
-	public static class ByValue extends SDL_Event implements com.sun.jna.Structure.ByValue {
-		
-	};
+    
+    
+    /**
+     *
+     * @return 
+     */
+    public SDL_Event.ByReference getReference() {
+        return new SDL_Event.ByReference( this );
+    }
+	
+    
+    /**
+     *
+     */
+    public static class ByReference extends SDL_Event implements com.sun.jna.Structure.ByReference {
+        ByReference() {}
+        ByReference(SDL_Event other) { super( other.getPointer(), 0 ); }
+	}
+	/**
+     *
+     */
+    public static class ByValue extends SDL_Event implements com.sun.jna.Structure.ByValue {
+		ByValue() {}
+        ByValue(SDL_Event other) { super( other.getPointer(), 0 ); }
+	}
 }
