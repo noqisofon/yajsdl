@@ -4,18 +4,14 @@ import org.yajsdl.jna.SDLLibrary;
 
 
 public enum EventType {
-    NONE(SDLLibrary.SDL_EventType.SDL_NOEVENT),
-    ACTIVE(SDLLibrary.SDL_EventType.SDL_ACTIVEEVENT),
-    KEY_DOWN(SDLLibrary.SDL_EventType.SDL_KEYDOWN),
-    KEY_UP(SDLLibrary.SDL_EventType.SDL_KEYUP),
-    MOUSE_MOTION(SDLLibrary.SDL_EventType.SDL_MOUSEMOTION),
-    MOUSE_BUTTON_DOWN(SDLLibrary.SDL_EventType.SDL_MOUSEBUTTONDOWN),
-    MOUSE_BUTTON_UP(SDLLibrary.SDL_EventType.SDL_MOUSEBUTTONUP),
-    JOYSTICK_AXIS_MOTION(SDLLibrary.SDL_EventType.SDL_JOYAXISMOTION),
-    JOYSTICK_BALL_MOTION(SDLLibrary.SDL_EventType.SDL_JOYBALLMOTION),
+    NONE(SDLLibrary.SDL_EventType.SDL_NOEVENT), ACTIVE(SDLLibrary.SDL_EventType.SDL_ACTIVEEVENT), KEY_DOWN(
+            SDLLibrary.SDL_EventType.SDL_KEYDOWN), KEY_UP(SDLLibrary.SDL_EventType.SDL_KEYUP), MOUSE_MOTION(
+            SDLLibrary.SDL_EventType.SDL_MOUSEMOTION), MOUSE_BUTTON_DOWN(SDLLibrary.SDL_EventType.SDL_MOUSEBUTTONDOWN), MOUSE_BUTTON_UP(
+            SDLLibrary.SDL_EventType.SDL_MOUSEBUTTONUP), JOYSTICK_AXIS_MOTION(
+            SDLLibrary.SDL_EventType.SDL_JOYAXISMOTION), JOYSTICK_BALL_MOTION(
+            SDLLibrary.SDL_EventType.SDL_JOYBALLMOTION),
 
-    QUIT(SDLLibrary.SDL_EventType.SDL_QUIT),;
-
+    QUIT(SDLLibrary.SDL_EventType.SDL_QUIT), ;
 
     private EventType(int value) {
         this.value_ = value;
@@ -25,7 +21,6 @@ public enum EventType {
     public int toInt() {
         return this.value_;
     }
-
 
     private int value_;
 }

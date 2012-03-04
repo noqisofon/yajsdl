@@ -12,9 +12,11 @@ public abstract class SDLEvent {
         this.type_ = EventType.NONE;
         this.consumed_ = false;
     }
+
+
     /**
-     *
-     * @param eventType 
+     * 
+     * @param eventType
      */
     public SDLEvent(EventType eventType) {
         this.type_ = eventType;
@@ -23,25 +25,26 @@ public abstract class SDLEvent {
 
 
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     public abstract SDL_Event toSource();
 
 
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     public EventType getEventType() {
         return this.type_;
     }
-    
-    
+
+
     /**
      * SDL_Event オブジェクトから SDLEvent オブジェクトを作成して返します。
+     * 
      * @param sdl_event
-     * @return  
+     * @return
      */
     public static SDLEvent create(SDL_Event sdl_event) {
         SDLEvent ret;
@@ -54,7 +57,7 @@ public abstract class SDLEvent {
             case SDLLibrary.SDL_EventType.SDL_KEYDOWN:
                 ret = KeyboardEvent.create( sdl_event.key );
                 break;
-                
+
             default:
                 ret = null;
                 break;
@@ -67,19 +70,17 @@ public abstract class SDLEvent {
     /**
      * 
      */
-    protected void consume() {
-    }
+    protected void consume() {}
 
 
     /**
      * 
-     * @return 
+     * @return
      */
     protected boolean isConsume() {
         return this.consumed_;
     }
 
-
     private EventType type_;
-    private boolean consumed_;
+    private boolean   consumed_;
 }

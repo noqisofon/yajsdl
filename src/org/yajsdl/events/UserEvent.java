@@ -8,26 +8,26 @@ import org.yajsdl.jna.SDL_Event;
 
 
 /**
- *
+ * 
  * @author rihine
  */
 public class UserEvent extends SDLEvent {
     /**
-     *
-     * @param eventType 
+     * 
+     * @param eventType
      */
     public UserEvent(EventType eventType) {
         super( eventType );
     }
 
-    
+
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     @Override
     public SDL_Event toSource() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
-    
+
 }

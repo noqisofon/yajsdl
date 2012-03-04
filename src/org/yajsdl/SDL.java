@@ -21,32 +21,33 @@
 //
 package org.yajsdl;
 
-
 import org.yajsdl.jna.SDLLibrary;
 
 
 /**
  * @author rihine
- *
+ * 
  */
 public final class SDL {
-
 
     public static final int INIT_TIMER       = 0x00000001;
     public static final int INIT_AUDIO       = 0x00000010;
     public static final int INIT_VIDEO       = 0x00000020;
     public static final int INIT_CDROM       = 0x00000100;
     public static final int INIT_JOYSTICK    = 0x00000200;
-    public static final int INIT_NOPARACHUTE = 0x00100000;  /**< Don't catch fatal signals */
-    public static final int INIT_EVENTTHREAD = 0x01000000;  /**< Not supported on all OS's */
+    public static final int INIT_NOPARACHUTE = 0x00100000;
+    /** < Don't catch fatal signals */
+    public static final int INIT_EVENTTHREAD = 0x01000000;
+    /** < Not supported on all OS's */
     public static final int INIT_EVERYTHING  = 0x0000FFFF;
 
 
     /**
      * 指定されたフラグを渡して SDL システムを初期化します。
+     * 
      * @param flags
      * @return
-     * @throws SDLException  
+     * @throws SDLException
      */
     public static boolean init(int flags) {
         int ret;
@@ -63,9 +64,10 @@ public final class SDL {
 
     /**
      * 指定されたフラグに対応する SDL サブシステムを初期化します。
+     * 
      * @param flags
      * @return
-     * @throws SDLException  
+     * @throws SDLException
      */
     public static boolean initSubSystem(int flags) {
         int ret;
@@ -81,47 +83,51 @@ public final class SDL {
 
     /**
      * 指定されたフラグに対応する SDL サブシステムが初期化されているかどうかの論理和を返します。
+     * 
      * @param flags
-     * @return  
+     * @return
      */
     public static boolean wasInit(int flags) {
-        return (SDLLibrary.INSTANCE.SDL_WasInit( flags ) & flags) == flags;
+        return ( SDLLibrary.INSTANCE.SDL_WasInit( flags ) & flags ) == flags;
     }
 
 
     /**
      * SDL ビデオサブシステムが初期化されていれば真を返します。
-     * @return 
+     * 
+     * @return
      */
     public static boolean wasInitVideo() {
         int flags = SDL.INIT_VIDEO;
         int ret = SDLLibrary.INSTANCE.SDL_WasInit( flags );
 
-        return (ret & flags) == flags;
+        return ( ret & flags ) == flags;
     }
 
 
     /**
      * SDL オーディオサブシステムが初期化されていれば真を返します。
-     * @return 
+     * 
+     * @return
      */
     public static boolean wasInitAudio() {
         int flags = SDL.INIT_AUDIO;
         int ret = SDLLibrary.INSTANCE.SDL_WasInit( flags );
 
-        return (ret & flags) == flags;
+        return ( ret & flags ) == flags;
     }
 
 
     /**
      * SDL タイマーサブシステムが初期化されていれば真を返します。
-     * @return 
+     * 
+     * @return
      */
     public static boolean wasInitTimer() {
         int flags = SDL.INIT_TIMER;
         int ret = SDLLibrary.INSTANCE.SDL_WasInit( flags );
 
-        return (ret & flags) == flags;
+        return ( ret & flags ) == flags;
     }
 
 
@@ -135,9 +141,10 @@ public final class SDL {
 
     /**
      * 指定されたフラグに対応する SDL サブシステムをシャットダウンします。
+     * 
      * @param flags
      * @return
-     * @throws SDLException  
+     * @throws SDLException
      */
     public static boolean quitSubSystem(int flags) {
         int ret;

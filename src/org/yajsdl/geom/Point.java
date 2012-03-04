@@ -4,13 +4,11 @@
  */
 package org.yajsdl.geom;
 
-
 /**
- *
+ * 
  * @author rihine
  */
 public class Point implements Cloneable {
-
 
     /**
      *
@@ -19,18 +17,22 @@ public class Point implements Cloneable {
         this.x_ = 0;
         this.y_ = 0;
     }
+
+
     /**
-     *
+     * 
      * @param x
-     * @param y  
+     * @param y
      */
     public Point(int x, int y) {
         this.x_ = x;
         this.y_ = y;
     }
+
+
     /**
-     *
-     * @param other 
+     * 
+     * @param other
      */
     public Point(Point other) {
         this.x_ = other.x_;
@@ -40,7 +42,7 @@ public class Point implements Cloneable {
 
     /**
      * 
-     * @return 
+     * @return
      */
     @Override
     public Point clone() {
@@ -51,7 +53,7 @@ public class Point implements Cloneable {
     /**
      * 
      * @param v
-     * @return  
+     * @return
      */
     public Point add(Point v) {
         return new Point( this.x_ + v.x_, this.y_ + v.y_ );
@@ -61,7 +63,7 @@ public class Point implements Cloneable {
     /**
      * 
      * @param other
-     * @return  
+     * @return
      */
     public boolean equals(Point other) {
         return this.x_ == other.x_ && this.y_ == other.y_;
@@ -71,7 +73,7 @@ public class Point implements Cloneable {
     /**
      * 
      * @param dx
-     * @param dy  
+     * @param dy
      */
     public void offset(int dx, int dy) {
         this.x_ += dx;
@@ -80,8 +82,8 @@ public class Point implements Cloneable {
 
 
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     public int length() {
         return (int)Math.sqrt( this.x_ * this.x_ + this.y_ * this.y_ );
@@ -89,18 +91,21 @@ public class Point implements Cloneable {
 
 
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
-    public int getX() { return this.x_; }
+    public int getX() {
+        return this.x_;
+    }
 
-    
+
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
-    public int getY() { return this.y_; }
-
+    public int getY() {
+        return this.y_;
+    }
 
     private int x_;
     private int y_;

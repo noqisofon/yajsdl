@@ -4,24 +4,30 @@
  */
 package org.yajsdl;
 
-
 /**
- *
+ * 
  * @author rihine
  */
 public class SDLException extends Exception {
     /**
-     *
-     * @param e 
+	 * 
+	 */
+    private static final long serialVersionUID = 8507567623097231871L;
+
+
+    /**
+     * 
+     * @param e
      */
     public SDLException(Exception e) {
         super( e );
     }
+
+
     /**
-     *
-     * @param message 
+     * 
+     * @param message
      */
-    public SDLException(String message) {
-    }
-    
+    public SDLException(String message) {}
+
 }

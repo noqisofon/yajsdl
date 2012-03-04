@@ -6,8 +6,9 @@ package org.yajsdl.events;
 
 import org.yajsdl.jna.SDLLibrary;
 
+
 /**
- *
+ * 
  * @author rihine
  */
 public interface KeyCodes {

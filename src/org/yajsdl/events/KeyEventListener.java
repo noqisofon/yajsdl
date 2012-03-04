@@ -5,20 +5,20 @@
 package org.yajsdl.events;
 
 /**
- *
+ * 
  * @author rihine
  */
 public interface KeyEventListener extends EventListener {
     /**
-     *
-     * @param e 
+     * 
+     * @param e
      */
     public void keyReleased(KeyboardEvent e);
-    
-    
+
+
     /**
-     *
-     * @param e 
+     * 
+     * @param e
      */
     public void keyPressed(KeyboardEvent e);
 }

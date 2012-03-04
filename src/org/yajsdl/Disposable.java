@@ -21,14 +21,13 @@
 //
 package org.yajsdl;
 
-
 /**
  *
  */
 public interface Disposable {
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     boolean isDisposed();
 

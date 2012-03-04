@@ -8,7 +8,7 @@ import org.yajsdl.jna.SDL_Rect;
 
 
 /**
- *
+ * 
  * @author rihine
  */
 public class Rect implements Cloneable {
@@ -21,12 +21,14 @@ public class Rect implements Cloneable {
         this.width_ = 0;
         this.height_ = 0;
     }
+
+
     /**
-     *
+     * 
      * @param x
      * @param y
      * @param width
-     * @param height  
+     * @param height
      */
     public Rect(int x, int y, int width, int height) {
         this.x_ = x;
@@ -34,9 +36,11 @@ public class Rect implements Cloneable {
         this.width_ = width;
         this.height_ = height;
     }
+
+
     /**
-     *
-     * @param other 
+     * 
+     * @param other
      */
     public Rect(Rect other) {
         this.x_ = other.x_;
@@ -47,8 +51,8 @@ public class Rect implements Cloneable {
 
 
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     @Override
     public Rect clone() {
@@ -57,88 +61,103 @@ public class Rect implements Cloneable {
 
 
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
-    public int getX() { return this.x_; }
-
-
-    /**
-     *
-     * @return 
-     */
-    public int getY() { return this.y_; }
-
-
-    /**
-     *
-     * @return 
-     */
-    public int getWidth() { return this.width_; }
-
-
-    /**
-     *
-     * @return 
-     */
-    public int getHeight() { return this.height_; }
+    public int getX() {
+        return this.x_;
+    }
 
 
     /**
      * 
-     * @return 
+     * @return
      */
-    public int getTop() { return this.y_; }
+    public int getY() {
+        return this.y_;
+    }
 
 
     /**
      * 
-     * @return 
+     * @return
      */
-    public int getLeft() { return this.x_; }
+    public int getWidth() {
+        return this.width_;
+    }
 
 
     /**
      * 
-     * @return 
+     * @return
      */
-    public int getBottom() { return this.y_ + this.height_; }
+    public int getHeight() {
+        return this.height_;
+    }
 
 
     /**
      * 
-     * @return 
+     * @return
      */
-    public int getRight() { return this.x_ + this.width_; }
+    public int getTop() {
+        return this.y_;
+    }
 
 
     /**
-     *
+     * 
+     * @return
+     */
+    public int getLeft() {
+        return this.x_;
+    }
+
+
+    /**
+     * 
+     * @return
+     */
+    public int getBottom() {
+        return this.y_ + this.height_;
+    }
+
+
+    /**
+     * 
+     * @return
+     */
+    public int getRight() {
+        return this.x_ + this.width_;
+    }
+
+
+    /**
+     * 
      * @param x
      * @param y
-     * @return  
+     * @return
      */
     public boolean contains(int x, int y) {
-        return (this.x_ <= x && this.x_ + this.width_ > x)
-            && (this.y_ <= y && this.y_ + this.height_ > y);
+        return ( this.x_ <= x && this.x_ + this.width_ > x ) && ( this.y_ <= y && this.y_ + this.height_ > y );
     }
 
 
     /**
-     *
+     * 
      * @param point
-     * @return  
+     * @return
      */
     public boolean containsPoint(Point point) {
-        return (this.x_ <= point.getX() && this.x_ + this.width_ > point.getX())
-            && (this.y_ <= point.getY() && this.y_ + this.height_ > point.getY());
+        return ( this.x_ <= point.getX() && this.x_ + this.width_ > point.getX() )
+                && ( this.y_ <= point.getY() && this.y_ + this.height_ > point.getY() );
     }
 
 
     /**
-     *
+     * 
      * @param rect
-     * @return  
+     * @return
      */
     public boolean containsRect(Rect rect) {
         return this.getLeft() <= rect.getLeft();
@@ -147,25 +166,21 @@ public class Rect implements Cloneable {
 
     /**
      * 
-     * @return 
+     * @return
      */
     public boolean isEmpty() {
-        return this.x_ == 0
-            && this.y_ == 0
-            && this.width_ == 0
-            && this.height_ == 0;
+        return this.x_ == 0 && this.y_ == 0 && this.width_ == 0 && this.height_ == 0;
     }
 
-    
+
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     public SDL_Rect toSource() {
         return new SDL_Rect( (short)this.x_, (short)this.y_, (short)this.width_, (short)this.height_ );
     }
-    
-    
+
     private int x_;
     private int y_;
     private int width_;

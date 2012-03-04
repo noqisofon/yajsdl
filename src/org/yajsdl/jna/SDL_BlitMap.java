@@ -1,5 +1,3 @@
 package org.yajsdl.jna;
 
-
-public interface SDL_BlitMap {
-}
+public interface SDL_BlitMap {}

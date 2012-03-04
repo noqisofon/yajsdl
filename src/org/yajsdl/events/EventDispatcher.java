@@ -1,14 +1,14 @@
 package org.yajsdl.events;
 
-
 import com.sun.jna.Pointer;
 import java.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.yajsdl.jna.SDLLibrary;
 import org.yajsdl.jna.SDL_Event;
-//import yajsdl.utils.*;
 
+
+//import yajsdl.utils.*;
 
 public class EventDispatcher implements IEventDispatcher, Runnable {
     /**
@@ -18,9 +18,11 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
         this.target_ = null;
         this.running_ = false;
     }
+
+
     /**
      * 
-     * @param target 
+     * @param target
      */
     public EventDispatcher(IEventDispatcher target) {
         this.target_ = target;
@@ -31,7 +33,7 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
     /**
      * 
      * @param eventType
-     * @param listener  
+     * @param listener
      */
     @Override
     public void addEventListener(EventType eventType, EventListener listener) {
@@ -39,8 +41,7 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
 
         if ( !this.listeners_.containsKey( event_type_name ) ) {
             /*
-              ArrayList への Collections.synchronizedList は要らないかもしれない。
-              が、一応。
+             * ArrayList への Collections.synchronizedList は要らないかもしれない。 が、一応。
              */
             this.listeners_.put( event_type_name, Collections.synchronizedList( new ArrayList<EventListener>() ) );
         }
@@ -53,12 +54,12 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
     /**
      * 
      * @param eventType
-     * @param listener  
+     * @param listener
      */
     @Override
     public void removeEventListener(EventType eventType, EventListener listener) {
         String event_type_name = eventType.name();
-        
+
         if ( this.listeners_.get( event_type_name ).contains( listener ) ) {
             this.listeners_.get( event_type_name ).remove( listener );
         }
@@ -68,7 +69,7 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
     /**
      * 
      * @param event
-     * @throws SDLEventException  
+     * @throws SDLEventException
      */
     public void pushEvent(SDLEvent event) throws SDLEventException {
         this.basePushEvent( event );
@@ -77,7 +78,7 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
 
     /**
      * 
-     * @return 
+     * @return
      */
     public SDLEvent pollEvent() {
         return basePollEvent();
@@ -98,7 +99,7 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
             event = this.pollEvent();
             if ( event != null ) {
                 EventType event_type = event.getEventType();
-                
+
                 List<EventListener> listeners = null;
                 switch ( event_type ) {
                     case KEY_UP:
@@ -107,7 +108,7 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
                         for ( Iterator<EventListener> it = listeners.iterator(); it.hasNext(); ) {
                             EventListener listener = it.next();
 
-                            ((KeyListener)listener).keyReleased( (KeyboardEvent)event );
+                            ( (KeyListener)listener ).keyReleased( (KeyboardEvent)event );
                         }
                         break;
 
@@ -117,44 +118,42 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
                         for ( Iterator<EventListener> it = listeners.iterator(); it.hasNext(); ) {
                             EventListener listener = it.next();
 
-                            ((KeyListener)listener).keyPressed( (KeyboardEvent)event );
+                            ( (KeyListener)listener ).keyPressed( (KeyboardEvent)event );
                         }
-                        
+
                         break;
 
                     case QUIT:
                         this.running_ = false;
                         break;
                 }
-                
+
             }
 
             event = this.pollEvent();
         }
 
         // } catch ( SDLEventException se ) {
-        //     logger.error( "EventDispatcher#run SDLEventException:", e );
+        // logger.error( "EventDispatcher#run SDLEventException:", e );
         // } catch ( Exception e ) {
-        //     logger.error( "EventDispatcher#run Exception found:", e );
+        // logger.error( "EventDispatcher#run Exception found:", e );
         // }
     }
 
 
     /**
      * イベントキューから numEvents 個のイベントを取り出して返します。
+     * 
      * @param numEvents
      * @return
-     * @throws SDLEventException  
+     * @throws SDLEventException
      */
     protected SDLEvent[] basePeekEvent(int numEvents) throws SDLEventException {
         int ret;
         SDL_Event[] sdl_events = new SDL_Event[numEvents];
         SDLEvent[] events;
 
-        ret = SDLLibrary.INSTANCE.SDL_PeepEvents( sdl_events,
-                                                  numEvents,
-                                                  SDLLibrary.SDL_eventaction.SDL_PEEKEVENT,
-                                                  0 );
+        ret = SDLLibrary.INSTANCE.SDL_PeepEvents( sdl_events, numEvents, SDLLibrary.SDL_eventaction.SDL_PEEKEVENT, 0 );
         if ( ret == -1 ) {
             throw new SDLEventException( SDLLibrary.INSTANCE.SDL_GetError() );
         }
@@ -171,17 +170,14 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
      * 
      * @param numEvents
      * @return
-     * @throws SDLEventException  
+     * @throws SDLEventException
      */
     protected SDLEvent[] baseGetEvent(int numEvents) throws SDLEventException {
         int ret;
         SDL_Event[] sdl_events = new SDL_Event[numEvents];
         SDLEvent[] events;
 
-        ret = SDLLibrary.INSTANCE.SDL_PeepEvents( sdl_events,
-                                                  numEvents,
-                                                  SDLLibrary.SDL_eventaction.SDL_GETEVENT,
-                                                  0 );
+        ret = SDLLibrary.INSTANCE.SDL_PeepEvents( sdl_events, numEvents, SDLLibrary.SDL_eventaction.SDL_GETEVENT, 0 );
         if ( ret == -1 ) {
             throw new SDLEventException( SDLLibrary.INSTANCE.SDL_GetError() );
         }
@@ -192,12 +188,11 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
         }
         return events;
     }
-    
-    
+
 
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     protected SDLEvent baseWaitEvent() {
         int ret;
@@ -213,11 +208,11 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
         }
         return ret_event;
     }
-    
-   
+
+
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     protected SDLEvent basePollEvent() {
         int ret;
@@ -227,7 +222,7 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
 
         ret = SDLLibrary.INSTANCE.SDL_PollEvent( holder );
         /*
-          ret が 1 の場合、sdl_event は呼びだす前と呼び出す後ではなにか変化があるはず。
+         * ret が 1 の場合、sdl_event は呼びだす前と呼び出す後ではなにか変化があるはず。
          */
         if ( ret == 1 ) {
             ret_event = SDLEvent.create( sdl_event );
@@ -240,10 +235,10 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
 
 
     /**
-     *
+     * 
      * @param event
      * @return
-     * @throws SDLEventException  
+     * @throws SDLEventException
      */
     protected boolean basePushEvent(SDLEvent event) throws SDLEventException {
         int ret;
@@ -257,8 +252,8 @@ public class EventDispatcher implements IEventDispatcher, Runnable {
         return true;
     }
 
-
-    private IEventDispatcher target_;
-    private Map<String, List<EventListener>> listeners_ = Collections.synchronizedMap( new HashMap<String, List<EventListener>>() );
-    private boolean running_;
+    private IEventDispatcher                 target_;
+    private Map<String, List<EventListener>> listeners_ = Collections
+                                                                .synchronizedMap( new HashMap<String, List<EventListener>>() );
+    private boolean                          running_;
 }

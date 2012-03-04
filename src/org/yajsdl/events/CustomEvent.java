@@ -6,8 +6,9 @@ package org.yajsdl.events;
 
 import org.yajsdl.jna.SDL_Event;
 
+
 /**
- *
+ * 
  * @author rihine
  */
 public class CustomEvent extends SDLEvent {
@@ -18,14 +19,14 @@ public class CustomEvent extends SDLEvent {
         super( eventType );
     }
 
-    
+
     /**
-     *
-     * @return 
+     * 
+     * @return
      */
     @Override
     public SDL_Event toSource() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
-    
+
 }

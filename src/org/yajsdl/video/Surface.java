@@ -34,8 +34,9 @@ public class Surface implements Disposable {
     /**
      * 
      */
-    public Surface() {
-    }
+    public Surface() {}
+
+
     /**
      * 
      */
@@ -43,6 +44,8 @@ public class Surface implements Disposable {
         this.content_ = other;
         this.is_disposed_ = false;
     }
+
+
     /**
      * 指定された幅、高さ、色深度、サーフェスフラッグを持つ空のサーフェスを作成します。
      */
@@ -50,6 +53,8 @@ public class Surface implements Disposable {
         this.content_ = baseCreateRGBSurface( width, height, depth, flags );
         this.is_disposed_ = false;
     }
+
+
     /**
      * 指定された幅、高さ、色深度、サーフェスフラッグを持つサーフェスをピクセルバッファから作成します。
      */
@@ -83,6 +88,8 @@ public class Surface implements Disposable {
 
         return baseBlitSurface( src, src_rect, new Rect() );
     }
+
+
     /**
      * 
      */
@@ -115,11 +122,11 @@ public class Surface implements Disposable {
      * 
      */
     public boolean isMustLock() {
-        return this.content_.offset != 0 ||
-            ( this.content_.flags & (SDLLibrary.SDL_HWSURFACE | SDLLibrary.SDL_ASYNCBLIT | SDLLibrary.SDL_RLEACCEL) ) != 0;
+        return this.content_.offset != 0
+                || ( this.content_.flags & ( SDLLibrary.SDL_HWSURFACE | SDLLibrary.SDL_ASYNCBLIT | SDLLibrary.SDL_RLEACCEL ) ) != 0;
     }
-    
-    
+
+
     /**
      * 
      */
@@ -154,52 +161,41 @@ public class Surface implements Disposable {
     protected static SDL_Surface baseCreateRGBSurface(int flags, int width, int height, int depth) {
         PixelFormat pixel_format = PixelFormat.getDefaultPixelFormat();
 
-        return baseCreateRGBSurface( flags,
-                                     width, height, depth,
-                                     pixel_format.getRedMask(),
-                                     pixel_format.getGreenMask(),
-                                     pixel_format.getBlueMask(),
-                                     pixel_format.getAlphaMask() );
-    }
-    /**
-     * 
-     */
-    protected static SDL_Surface baseCreateRGBSurface(int flags, int width, int height, int depth, int redMask, int greenMask, int blueMask, int alphaMask) {
-        return SDLLibrary.INSTANCE.SDL_CreateRGBSurface( flags,
-                                                         width, height, depth,
-                                                         redMask, greenMask, blueMask,
-                                                         alphaMask );        
-
-        
+        return baseCreateRGBSurface( flags, width, height, depth, pixel_format.getRedMask(),
+                pixel_format.getGreenMask(), pixel_format.getBlueMask(), pixel_format.getAlphaMask() );
     }
 
 
     /**
      * 
      */
-    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixel_buffer, int flags, int width, int height, int depth) {
+    protected static SDL_Surface baseCreateRGBSurface(int flags, int width, int height, int depth, int redMask,
+            int greenMask, int blueMask, int alphaMask) {
+        return SDLLibrary.INSTANCE.SDL_CreateRGBSurface( flags, width, height, depth, redMask, greenMask, blueMask,
+                alphaMask );
+
+    }
+
+
+    /**
+     * 
+     */
+    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixel_buffer, int flags, int width, int height,
+            int depth) {
         PixelFormat pixel_format = PixelFormat.getDefaultPixelFormat();
 
-        return baseCreateRGBSurfaceFrom( pixel_buffer,
-                                         flags,
-                                         width, height, depth,
-                                         pixel_format.getRedMask(),
-                                         pixel_format.getGreenMask(),
-                                         pixel_format.getBlueMask(),
-                                         pixel_format.getAlphaMask() );
+        return baseCreateRGBSurfaceFrom( pixel_buffer, flags, width, height, depth, pixel_format.getRedMask(),
+                pixel_format.getGreenMask(), pixel_format.getBlueMask(), pixel_format.getAlphaMask() );
     }
+
+
     /**
      * 
      */
-    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixelBuffer,
-                                                          int flags,
-                                                          int width, int height, int depth,
-                                                          int redMask, int greenMask, int blueMask, int alphaMask) {
-        return  SDLLibrary.INSTANCE.SDL_CreateRGBSurfaceFrom( pixelBuffer,
-                                                              flags,
-                                                              width, height, depth,
-                                                              redMask, greenMask, blueMask,
-                                                              alphaMask );
+    protected static SDL_Surface baseCreateRGBSurfaceFrom(ByteBuffer pixelBuffer, int flags, int width, int height,
+            int depth, int redMask, int greenMask, int blueMask, int alphaMask) {
+        return SDLLibrary.INSTANCE.SDL_CreateRGBSurfaceFrom( pixelBuffer, flags, width, height, depth, redMask,
+                greenMask, blueMask, alphaMask );
     }
 
 
@@ -253,10 +249,7 @@ public class Surface implements Disposable {
     protected boolean baseBlitSurface(Surface src, Rect srcrect, Rect dstrect) {
         int ret;
 
-        ret = SDLLibrary.INSTANCE.SDL_UpperBlit( src.toSource(),
-                                                 srcrect.toSource(),
-                                                 this.content_,
-                                                 dstrect.toSource() );
+        ret = SDLLibrary.INSTANCE.SDL_UpperBlit( src.toSource(), srcrect.toSource(), this.content_, dstrect.toSource() );
 
         return ret == 0;
     }
@@ -266,11 +259,7 @@ public class Surface implements Disposable {
      * 
      */
     protected void baseUpdateRect(int x, int y, int width, int height) {
-        SDLLibrary.INSTANCE.SDL_UpdateRect( content_,
-                                            x,
-                                            y,
-                                            width,
-                                            height );
+        SDLLibrary.INSTANCE.SDL_UpdateRect( content_, x, y, width, height );
     }
 
 
@@ -280,9 +269,7 @@ public class Surface implements Disposable {
     protected void baseUpdateRects(Rect[] rects) {
         SDL_Rect[] sdl_rects = convertNativeRects( rects );
 
-        SDLLibrary.INSTANCE.SDL_UpdateRects( content_,
-                                             rects.length,
-                                             sdl_rects );
+        SDLLibrary.INSTANCE.SDL_UpdateRects( content_, rects.length, sdl_rects );
     }
 
 
@@ -318,8 +305,8 @@ public class Surface implements Disposable {
         }
         return sdl_rects;
     }
-    
-    
+
+
     /**
      * 
      */
@@ -327,7 +314,6 @@ public class Surface implements Disposable {
         return SDLLibrary.INSTANCE.SDL_SetVideoMode( width, height, bpp, flags );
     }
 
-
     private SDL_Surface content_;
-    private boolean is_disposed_;
+    private boolean     is_disposed_;
 }

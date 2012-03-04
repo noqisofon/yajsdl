@@ -1,6 +1,5 @@
 package org.yajsdl.video;
 
-import com.sun.jna.Pointer;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.HashSet;
@@ -18,6 +17,8 @@ public class Palette extends AbstractSet<Color> {
         super();
         this.content_ = new HashSet<Color>();
     }
+
+
     /**
      *
      */
@@ -25,6 +26,8 @@ public class Palette extends AbstractSet<Color> {
         super();
         this.content_ = new HashSet<Color>( collection );
     }
+
+
     /**
      *
      */
@@ -32,7 +35,8 @@ public class Palette extends AbstractSet<Color> {
         super();
         this.content_ = new HashSet<Color>( initialCapacity );
     }
-    
+
+
     /**
      *
      */
@@ -50,7 +54,7 @@ public class Palette extends AbstractSet<Color> {
         return this.content_.iterator();
     }
 
-    
+
     /**
      *
      */
@@ -77,7 +81,6 @@ public class Palette extends AbstractSet<Color> {
 
         return ret;
     }
-
 
     private HashSet<Color> content_;
 }

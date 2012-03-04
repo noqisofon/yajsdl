@@ -6,22 +6,24 @@ package org.yajsdl.video;
 
 import org.yajsdl.jna.SDLLibrary;
 
+
 /**
- *
+ * 
  * @author rihine
  */
 public class Screen extends Surface {
 
     public static final int SYSTEM_MEMORY = SDLLibrary.SDL_SWSURFACE;
-    public static final int VIDEO_MEMORY = SDLLibrary.SDL_HWSURFACE;
-    public static final int ASYNC_BLIT = SDLLibrary.SDL_ASYNCBLIT;
+    public static final int VIDEO_MEMORY  = SDLLibrary.SDL_HWSURFACE;
+    public static final int ASYNC_BLIT    = SDLLibrary.SDL_ASYNCBLIT;
 
 
     /**
      *
      */
-    private Screen() {
-    }
+    private Screen() {}
+
+
     /**
      *
      */
@@ -35,7 +37,7 @@ public class Screen extends Surface {
      * @param x
      * @param y
      * @param width
-     * @param height  
+     * @param height
      */
     public void updateRect(int x, int y, int width, int height) {
         super.baseUpdateRect( x, y, width, height );
@@ -48,11 +50,12 @@ public class Screen extends Surface {
     public void flip() {
         super.baseFlip();
     }
-    
-    
+
+
     /**
      * 常に真を返します。
-     * @return 
+     * 
+     * @return
      */
     @Override
     public boolean isScreen() {
@@ -77,7 +80,6 @@ public class Screen extends Surface {
     public static int videoModeOK(int width, int height, int bpp, int flags) {
         return SDLLibrary.INSTANCE.SDL_VideoModeOK( width, height, bpp, flags );
     }
-    
-    
+
     private static Screen the_screen;
 }

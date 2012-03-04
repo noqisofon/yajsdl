@@ -29,7 +29,6 @@ import org.yajsdl.jna.SDL_PixelFormat;
  */
 public class PixelFormat {
 
-
     /**
      * 
      */
@@ -73,11 +72,11 @@ public class PixelFormat {
         return null;
     }
 
-    
+
     /**
      * 
      */
     public SDL_PixelFormat toSource() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException( "Not yet implemented" );
     }
 }

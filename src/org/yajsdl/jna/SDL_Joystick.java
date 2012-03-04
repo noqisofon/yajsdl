@@ -5,9 +5,9 @@
 package org.yajsdl.jna;
 
 /**
- *
+ * 
  * @author rihine
  */
 public interface SDL_Joystick extends SDLLibrary._SDL_Joystick {
-    
+
 }
